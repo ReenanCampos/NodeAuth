@@ -8,7 +8,7 @@ if (port === 3306) {
         host     : 'localhost',
         port     : 3306,
         user     : 'root',
-        password : 'renan123',
+        password : 'root', // renan123 / root
         database : 'cmsteste',
         connectionLimit: 1000,
         connectTimeout  : 60 * 60 * 1000,

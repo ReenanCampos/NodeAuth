@@ -37,7 +37,6 @@ var RoleService = {
 
       if (error) {
         console.log(error);
-        var apiResult = {};
         res.status(400).json(
         { status: 400,
           message: error.message,

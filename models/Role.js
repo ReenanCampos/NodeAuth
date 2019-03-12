@@ -1,17 +1,17 @@
 
 //! Construtor
-function Role(role, validar=false) {
-    this.validacao = {valido: false, msgErro: []};
+function Role(entity, validar=false) {
+    this.validacao = {valido: false, msgErro: ["Não validado ainda"]};
+    this.id  = "";
     this.nome = "";
     this.descricao  = "";
     this.ativo  = 0;
-    this.id  = "";
     
-    if(role != undefined){
-        this.nome = role.nome || "";
-        this.descricao  = role.descricao  || "";
-        this.ativo  = role.ativo  || 0;
-        this.id  = role.id  || "";
+    if(entity != undefined){
+        this.id  = entity.id  || "";
+        this.nome = entity.nome || "";
+        this.descricao  = entity.descricao  || "";
+        this.ativo  = entity.ativo  || 0;
     }
 
     if(validar) this.validarEntidade();
@@ -21,8 +21,8 @@ Role.prototype ={
     role: null
 }
 
-Role.new = function(id=0, nome, descricao, ativo){
-    return new this(id=0, nome, descricao, ativo);
+Role.new = function(id="", nome, descricao, ativo){
+    return new this(id, nome, descricao, ativo);
 }
 
 //! Getter & Setters

@@ -3,7 +3,7 @@
 module.exports = {
 Delet:`
     DELETE FROM 
-        cmsteste.Usuario
+        Usuario
     WHERE
         id = ?;
 `}

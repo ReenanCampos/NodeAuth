@@ -18,13 +18,13 @@ USE `cmsteste`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `roles`
+-- Table structure for table `Roles`
 --
 
-DROP TABLE IF EXISTS `roles`;
+DROP TABLE IF EXISTS `Roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `roles` (
+CREATE TABLE `Roles` (
   `id` varchar(100) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `descricao` varchar(100) NOT NULL,
@@ -34,26 +34,26 @@ CREATE TABLE `roles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `roles`
+-- Dumping data for table `Roles`
 --
 
-LOCK TABLES `roles` WRITE;
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES ('admin','Administrador','Maior autoridade do sistema',_binary ''),('rolecasa1','role avbras','kkjjk',_binary ''),('rolecasa12','role avbras','kkjjk',_binary ''),('usuario','Usuario','Usuario comum do sistema',_binary '');
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+LOCK TABLES `Roles` WRITE;
+/*!40000 ALTER TABLE `Roles` DISABLE KEYS */;
+INSERT INTO `Roles` VALUES ('admin','Administrador','Maior autoridade do sistema',_binary ''),('Rolecasa1','Role avbras','kkjjk',_binary ''),('Rolecasa12','Role avbras','kkjjk',_binary ''),('Usuario','Usuario','Usuario comum do sistema',_binary '');
+/*!40000 ALTER TABLE `Roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `usuario`
+-- Table structure for table `Usuario`
 --
 
-DROP TABLE IF EXISTS `usuario`;
+DROP TABLE IF EXISTS `Usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuario` (
+CREATE TABLE `Usuario` (
   `id` varchar(100) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `usuario` varchar(50) NOT NULL,
+  `Usuario` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `telefone` varchar(100) DEFAULT NULL,
   `senha` varchar(256) NOT NULL,
@@ -65,25 +65,25 @@ CREATE TABLE `usuario` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuario`
+-- Dumping data for table `Usuario`
 --
 
-LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('rere','Renan Campos','rere','reenan.campos@gmail.com','41998562238','renan123','2019-03-09 22:52:54',_binary '',_binary '');
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+LOCK TABLES `Usuario` WRITE;
+/*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
+INSERT INTO `Usuario` VALUES ('rere','Renan Campos','rere','reenan.campos@gmail.com','41998562238','renan123','2019-03-09 22:52:54',_binary '',_binary '');
+/*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `usuariologinhistorico`
+-- Table structure for table `UsuarioLoginHistorico`
 --
 
-DROP TABLE IF EXISTS `usuariologinhistorico`;
+DROP TABLE IF EXISTS `UsuarioLoginHistorico`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuariologinhistorico` (
+CREATE TABLE `UsuarioLoginHistorico` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idusuario` varchar(100) NOT NULL,
+  `idUsuario` varchar(100) NOT NULL,
   `dataLogin` datetime NOT NULL,
   `ip` varchar(20) DEFAULT NULL,
   `nomeDispositivo` varchar(100) DEFAULT NULL,
@@ -93,25 +93,25 @@ CREATE TABLE `usuariologinhistorico` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuariologinhistorico`
+-- Dumping data for table `UsuarioLoginHistorico`
 --
 
-LOCK TABLES `usuariologinhistorico` WRITE;
-/*!40000 ALTER TABLE `usuariologinhistorico` DISABLE KEYS */;
-/*!40000 ALTER TABLE `usuariologinhistorico` ENABLE KEYS */;
+LOCK TABLES `UsuarioLoginHistorico` WRITE;
+/*!40000 ALTER TABLE `UsuarioLoginHistorico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `UsuarioLoginHistorico` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `usuariorole`
+-- Table structure for table `UsuarioRole`
 --
 
-DROP TABLE IF EXISTS `usuariorole`;
+DROP TABLE IF EXISTS `UsuarioRole`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuariorole` (
+CREATE TABLE `UsuarioRole` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idusuario` varchar(100) NOT NULL,
-  `idrole` varchar(100) NOT NULL,
+  `idUsuario` varchar(100) NOT NULL,
+  `idRole` varchar(100) NOT NULL,
   `dataInclusao` datetime NOT NULL,
   `idUsuarioInclusao` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
@@ -119,13 +119,13 @@ CREATE TABLE `usuariorole` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuariorole`
+-- Dumping data for table `UsuarioRole`
 --
 
-LOCK TABLES `usuariorole` WRITE;
-/*!40000 ALTER TABLE `usuariorole` DISABLE KEYS */;
-INSERT INTO `usuariorole` VALUES (1,'rere','admin','2019-03-09 23:02:25','rere'),(2,'rere','usuario','2019-03-09 23:02:25','rere');
-/*!40000 ALTER TABLE `usuariorole` ENABLE KEYS */;
+LOCK TABLES `UsuarioRole` WRITE;
+/*!40000 ALTER TABLE `UsuarioRole` DISABLE KEYS */;
+INSERT INTO `UsuarioRole` VALUES (1,'rere','admin','2019-03-09 23:02:25','rere'),(2,'rere','Usuario','2019-03-09 23:02:25','rere');
+/*!40000 ALTER TABLE `UsuarioRole` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

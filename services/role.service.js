@@ -9,6 +9,8 @@ var RoleService = {
       rolesSqlRep.SelectAll.SelectAll,
       function (error, results, fields) {
       
+      console.log(req);
+
       if (error) {
         console.log(error);
         var apiResult = {};

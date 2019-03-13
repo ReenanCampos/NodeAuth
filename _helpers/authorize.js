@@ -1,6 +1,10 @@
 
 const expressJwt = require('express-jwt');
 const { secret } = require('config.json');
+const ip = require("ip");
+const date = require('date-and-time');
+date.locale('fr')
+const os = require("os");
 
 module.exports = authorize;
 
@@ -17,9 +21,25 @@ function authorize(roles = []) {
 
         // authorize based on user role
         (req, res, next) => {
+            let date = require('date-and-time');
+            if(!verificaIpEHostname(req.user)){
+                // user's token is not valid
+                return res.status(401).json({code: 401, error: 'Unauthorized', message: "IP inválido"});
+            }
+
+            if(!verificaAutenticacaoTempo(req.user)){
+                // user's token is not valid
+                return res.status(401).json({code: 401, error: 'Unauthorized', message: "Token expirado"});
+            }
+
+            if(!verificaAutenticacaoExistencia(req.user)){
+                // user's token is not valid
+                return res.status(401).json({code: 401, error: 'Unauthorized', message: "Token inválido"});
+            }
+
             if (roles.length && !verificaAutorizacao(roles, req.user.roles)) {
                 // user's role is not authorized
-                return res.status(401).json({ message: 'Unauthorized' });
+                return res.status(401).json({code: 401, error: 'Unauthorized', message: "Sem permissão"});
             }
 
             // authentication and authorization successful
@@ -32,7 +52,7 @@ function verificaAutorizacao(roles = [], userRoles = []){
     let autoricazao = false;
     for(key in roles){
         for(key2 in userRoles){
-            if(roles[key] === userRoles[key2]){
+            if(roles[key] == userRoles[key2].id){
                 autoricazao = true;
                 break;
             }
@@ -42,4 +62,38 @@ function verificaAutorizacao(roles = [], userRoles = []){
         }
     }
     return autoricazao;
+}
+
+function verificaAutenticacaoTempo(user = ""){
+    let autenticacao = false;
+    if(user === ""){ return autenticacao }
+ //TODO ARRUMAR AQUI
+    var hoje = new Date();
+    console.log(user.expiresIn > hoje);
+    console.log(new Date(user.expiresIn));
+    console.log(new Date(hoje));
+    if(user.expiresIn > hoje){
+        autenticacao = true;
+    }
+    
+    return autenticacao;
+}
+
+function verificaAutenticacaoExistencia(user = ""){
+    let autenticacao = true;
+    if(user === ""){ return autenticacao }
+
+    return autenticacao;
+}
+
+function verificaIpEHostname(user = ""){
+    let autenticacao = true;
+    if(user === ""){ return autenticacao }
+    if(user.ip === ""){ return autenticacao }
+
+    if(user.ip === ip.address() && user.host === os.hostname()){
+        autenticacao = true;
+    }
+
+    return autenticacao;
 }

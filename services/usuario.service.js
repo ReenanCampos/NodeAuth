@@ -1,6 +1,9 @@
 ﻿const config = require('config.json');
 const jwt = require('jsonwebtoken');
 const Role = require('_helpers/role');
+const ip = require("ip");
+const date = require('date-and-time');
+const os = require("os");
 
 var db = require('../dbConnection');
 const usuarioSqlRep = require("../sqlrep/Usuario/All");
@@ -23,7 +26,7 @@ const segundosLoginToken = 43200; // 12hrs
 
 var UsuarioService = {
     authenticate: function(req, res) {
-        var resultJson = "";
+        var resultJson = "'";
         username = req.body.username;
         password = req.body.password;
         var results = db.query(
@@ -62,8 +65,11 @@ var UsuarioService = {
                 const token = jwt.sign({ 
                     sub: user.id, 
                     roles: user.roles,
-                    expiresIn: segundosLoginToken,
+                    createdIn: new Date(),
+                    expiresIn: date.addSeconds(new Date(), segundosLoginToken),
                     iss: nomeAplicacao,
+                    ip: ip.address(),
+                    host: os.hostname()
                     }, config.secret);
                 const { password, ...userWithoutPassword } = user;
                 res.status(200).json(

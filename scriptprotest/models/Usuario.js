@@ -81,12 +81,62 @@ Usuario.prototype.validarEntidade = function(){
     
     //* Vazio / Undefined
     if(this === undefined){ msgErro.push('Entidade Inválida'); }
-    if(this.id === undefined){ msgErro.push('Campo Id não pode ser vazio'); }
-    if(this.nome === undefined){ msgErro.push('Campo Nome não pode ser vazio'); }
-    if(this.batata === undefined){ msgErro.push('Campo Batata não pode ser vazio'); }
-    if(this.email === undefined){ msgErro.push('Campo Email não pode ser vazio'); }
-    if(this.telefone === undefined){ msgErro.push('Campo Telefone não pode ser vazio'); }
-    if(this.senha === undefined){ msgErro.push('Campo Senha não pode ser vazio'); }
-    if(this.dataNascimento === undefined){ msgErro.push('Campo DataNascimento não pode ser vazio'); }
-    if(this.ativo === undefined){ msgErro.push('Campo Ativo não pode ser vazio'); }
-    if(this.bloqueado === undefined){ msgErro.push('Campo Bloqueado não pode ser vazio'); }
+    if(this.id === undefined){ msgErro.push('Campo Id não pode ser vazio !'); }
+    if(this.nome === undefined){ msgErro.push('Campo Nome não pode ser vazio !'); }
+    if(this.batata === undefined){ msgErro.push('Campo Batata não pode ser vazio !'); }
+    if(this.email === undefined){ msgErro.push('Campo Email não pode ser vazio !'); }
+    if(this.telefone === undefined){ msgErro.push('Campo Telefone não pode ser vazio !'); }
+    if(this.senha === undefined){ msgErro.push('Campo Senha não pode ser vazio !'); }
+    if(this.dataNascimento === undefined){ msgErro.push('Campo DataNascimento não pode ser vazio !'); }
+    if(this.ativo === undefined){ msgErro.push('Campo Ativo não pode ser vazio !'); }
+    if(this.bloqueado === undefined){ msgErro.push('Campo Bloqueado não pode ser vazio !'); }
+    
+    if(this.id.length < 3){ msgErro.push('Campo Id possui menos de 3 caracteres !'); }
+    if(this.nome.length < 3){ msgErro.push('Campo Nome possui menos de 3 caracteres !'); }
+    if(this.batata.length < 3){ msgErro.push('Campo Batata possui menos de 3 caracteres !'); }
+    if(this.email.length < 3){ msgErro.push('Campo Email possui menos de 3 caracteres !'); }
+    if(this.telefone.length < 3){ msgErro.push('Campo Telefone possui menos de 3 caracteres !'); }
+    if(this.senha.length < 3){ msgErro.push('Campo Senha possui menos de 3 caracteres !'); }
+    if(this.dataNascimento.length < 3){ msgErro.push('Campo DataNascimento possui menos de 3 caracteres !'); }
+    if(this.ativo.length < 3){ msgErro.push('Campo Ativo possui menos de 3 caracteres !'); }
+    if(this.bloqueado.length < 3){ msgErro.push('Campo Bloqueado possui menos de 3 caracteres !'); }
+    
+    if(msgErro.length > 0) valido = false;
+    this.validacao = {valido: valido, msgErro: msgErro};
+};
+
+Usuario.prototype.validarEntidadeInsert = function(){
+    
+    var valido = true;
+    var msgErro = [];
+    
+    //TODO Código de validação para INSERT
+    
+    if(msgErro.length > 0) valido = false;
+    this.validacao.valido = valido;
+    this.validacao.msgErro = this.validacao.msgErro.concat(msgErro)
+}
+Usuario.prototype.validarEntidadeUpdate = function(){
+    
+    var valido = true;
+    var msgErro = [];
+    
+    //TODO Código de validação para UPDATE
+    
+    if(msgErro.length > 0) valido = false;
+    this.validacao.valido = valido;
+    this.validacao.msgErro = this.validacao.msgErro.concat(msgErro)
+}
+Usuario.prototype.validarEntidadeDelet = function(){
+    
+    var valido = true;
+    var msgErro = [];
+    
+    //TODO Código de validação para DELET
+    
+    if(msgErro.length > 0) valido = false;
+    this.validacao.valido = valido;
+    this.validacao.msgErro = this.validacao.msgErro.concat(msgErro)
+}
+//! Export
+module.exports = Usuario;

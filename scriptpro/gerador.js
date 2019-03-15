@@ -1,5 +1,4 @@
 
-
 const fs = require('fs');
 const basePath = __dirname.substr(0, __dirname.indexOf("scriptpro"));
 console.log(basePath);
@@ -159,16 +158,69 @@ function inicio(tableName, results){
     for(let i=0; i < results.length; i++){
         print(1, "if(this." + results[i].COLUMN_NAME + " === undefined){ msgErro.push('Campo " + capitalize(results[i].COLUMN_NAME) + " não pode ser vazio !'); }");
     }
+    print(1, "");
 
+    /*
     // Loop de vazio
-    for(let i=0; i < results.length; i++){
-        print(1, "if(this." + results[i].COLUMN_NAME + " === undefined){ msgErro.push('Campo " + capitalize(results[i].COLUMN_NAME) + " precisa ser preenchido !'); }");
-    }
+    // for(let i=0; i < results.length; i++){
+    //     if(results.DATA_TYPE == "varchar"){
 
-
-
+    //     }
+    //     print(1, "if(this." + results[i].COLUMN_NAME + " === undefined){ msgErro.push('Campo " + capitalize(results[i].COLUMN_NAME) + " precisa ser preenchido !'); }");
+    // }*/
+    
     // Loop de tamanho
+    for(let i=0; i < results.length; i++){
+        print(1, "if(this." + results[i].COLUMN_NAME + ".length < 3){ msgErro.push('Campo " + capitalize(results[i].COLUMN_NAME) + " possui menos de 3 caracteres !'); }");
+    }
+    print(1, "");
+
+    print(1, "if(msgErro.length > 0) valido = false;");
+    print(1, "this.validacao = {valido: valido, msgErro: msgErro};");
+    print(0, "};");
+    print(0, "");
+    
+    print(0, tableName + ".prototype.validarEntidadeInsert = function(){");
+    print(1, "");
+    print(1, "var valido = true;");
+    print(1, "var msgErro = [];");
+    print(1, "");
+    print(1, "//TODO Código de validação para INSERT");
+    print(1, "");
+    print(1, "if(msgErro.length > 0) valido = false;");
+    print(1, "this.validacao.valido = valido;");
+    print(1, "this.validacao.msgErro = this.validacao.msgErro.concat(msgErro)");
+    print(0, "}");
+
+    print(0, tableName + ".prototype.validarEntidadeUpdate = function(){");
+    print(1, "");
+    print(1, "var valido = true;");
+    print(1, "var msgErro = [];");
+    print(1, "");
+    print(1, "//TODO Código de validação para UPDATE");
+    print(1, "");
+    print(1, "if(msgErro.length > 0) valido = false;");
+    print(1, "this.validacao.valido = valido;");
+    print(1, "this.validacao.msgErro = this.validacao.msgErro.concat(msgErro)");
+    print(0, "}");
+
+    print(0, tableName + ".prototype.validarEntidadeDelet = function(){");
+    print(1, "");
+    print(1, "var valido = true;");
+    print(1, "var msgErro = [];");
+    print(1, "");
+    print(1, "//TODO Código de validação para DELET");
+    print(1, "");
+    print(1, "if(msgErro.length > 0) valido = false;");
+    print(1, "this.validacao.valido = valido;");
+    print(1, "this.validacao.msgErro = this.validacao.msgErro.concat(msgErro)");
+    print(0, "}");
+
+    print(0, "//! Export");
+    print(0, "module.exports = " + tableName + ";");
+
 }
+
 
 
 
@@ -236,7 +288,7 @@ function verifyType(tipoColuna){
 }
 
 function escreverArquivo(str = ""){
-    sleep(10);
+    sleep(15);
     if(!arquivoResetado){
         fs.open(basePath + folder + filename, "w", function(err) {
             if(err) {

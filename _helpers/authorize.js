@@ -2,9 +2,11 @@
 const expressJwt = require('express-jwt');
 const { secret } = require('config.json');
 const ip = require("ip");
-const date = require('date-and-time');
-date.locale('fr')
+const moment = require("moment");
+moment.locale('pt-BR');
 const os = require("os");
+
+const segundosLoginToken =  43200; // 12hrs
 
 module.exports = authorize;
 
@@ -14,27 +16,27 @@ function authorize(roles = []) {
     if (typeof roles === 'string') {
         roles = [roles];
     }
-
+    
     return [
         // authenticate JWT token and attach user to request object (req.user)
         expressJwt({ secret }),
-
+        
         // authorize based on user role
         (req, res, next) => {
-            let date = require('date-and-time');
-            if(!verificaIpEHostname(req.user)){
+
+            if(!verificaExistencia(req.user)){
                 // user's token is not valid
+                return res.status(401).json({code: 401, error: 'Unauthorized', message: "Token inválido"});
+            }
+
+            if(!verificaIpEHostname(req.user)){
+                // user's IP is not the same from origin
                 return res.status(401).json({code: 401, error: 'Unauthorized', message: "IP inválido"});
             }
 
-            if(!verificaAutenticacaoTempo(req.user)){
-                // user's token is not valid
+            if(!verificaTempo(req.user)){
+                // user's token is expired
                 return res.status(401).json({code: 401, error: 'Unauthorized', message: "Token expirado"});
-            }
-
-            if(!verificaAutenticacaoExistencia(req.user)){
-                // user's token is not valid
-                return res.status(401).json({code: 401, error: 'Unauthorized', message: "Token inválido"});
             }
 
             if (roles.length && !verificaAutorizacao(roles, req.user.roles)) {
@@ -46,6 +48,43 @@ function authorize(roles = []) {
             next();
         }
     ];
+}
+
+
+//! Validadores
+
+function verificaExistencia(user = ""){
+    let autenticacao = false;
+    if(user === ""){ return autenticacao; }
+    if(Object.keys(user).length === 0){ return autenticacao; }
+    if(JSON.stringify(user) === '{}') { return autenticacao; }
+    
+    autenticacao = true;
+    return autenticacao;
+}
+
+function verificaIpEHostname(user = ""){
+    let autenticacao = false;
+    if(user.ip === ""){ return autenticacao }
+
+    if(user.ip === ip.address() && user.host === os.hostname()){
+        autenticacao = true;
+    }
+
+    return autenticacao;
+}
+
+function verificaTempo(user = ""){
+    let autenticacao = false;
+
+    var dataAtual = new Date();
+    var dataLimite = moment(user.createdIn).add(segundosLoginToken, 'seconds').toDate();
+
+    if(moment(dataLimite).isAfter(moment(dataAtual))){
+        autenticacao = true;
+    }
+    
+    return autenticacao;
 }
 
 function verificaAutorizacao(roles = [], userRoles = []){
@@ -64,36 +103,3 @@ function verificaAutorizacao(roles = [], userRoles = []){
     return autoricazao;
 }
 
-function verificaAutenticacaoTempo(user = ""){
-    let autenticacao = false;
-    if(user === ""){ return autenticacao }
- //TODO ARRUMAR AQUI
-    var hoje = new Date();
-    console.log(user.expiresIn > hoje);
-    console.log(new Date(user.expiresIn));
-    console.log(new Date(hoje));
-    if(user.expiresIn > hoje){
-        autenticacao = true;
-    }
-    
-    return autenticacao;
-}
-
-function verificaAutenticacaoExistencia(user = ""){
-    let autenticacao = true;
-    if(user === ""){ return autenticacao }
-
-    return autenticacao;
-}
-
-function verificaIpEHostname(user = ""){
-    let autenticacao = true;
-    if(user === ""){ return autenticacao }
-    if(user.ip === ""){ return autenticacao }
-
-    if(user.ip === ip.address() && user.host === os.hostname()){
-        autenticacao = true;
-    }
-
-    return autenticacao;
-}

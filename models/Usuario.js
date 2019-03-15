@@ -1,7 +1,7 @@
 
 //! Construtor
 function Usuario(entity, validar=false) {
-    this.validacao = {valido: false, msgErro: ["Não validado ainda"]};
+    this.validacao = {valido: false, msgErro: ['Não validado ainda']};
     this.id = "";
     this.nome = "";
     this.usuario = "";
@@ -31,7 +31,7 @@ function Usuario(entity, validar=false) {
 }
 
 Usuario.prototype ={
-    usuario: null
+    Usuario: null
 }
 
 Usuario.new = function(id="", nome, usuario, email, telefone, senha, dataNascimento, ativo, bloqueado, roles){

@@ -8,7 +8,7 @@ SelectAll:`
         ,descricao
         ,ativo
     FROM
-        cmsteste.Roles
+        Roles
     WHERE
         ativo = 1;
 `}

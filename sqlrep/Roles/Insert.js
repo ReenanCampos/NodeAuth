@@ -2,7 +2,7 @@
 
 module.exports = {
 Insert:`
-    INSERT INTO cmsteste.Roles (
+    INSERT INTO Roles (
          id 
         ,nome
         ,descricao

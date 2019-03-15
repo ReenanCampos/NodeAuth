@@ -3,7 +3,7 @@
 module.exports = {
 Update:`
     UPDATE 
-        cmsteste.Roles
+        Roles
     SET
          nome = ?
         ,descricao = ?

@@ -1,4 +1,5 @@
 
+const utilWrite = require("./utilWrite");
 const tab = "    ";
 
 var utilScriptPro = {
@@ -7,8 +8,17 @@ var utilScriptPro = {
         let strFinal = "";
         for(let i=0; i<tabs; i++) strFinal += tab;
         strFinal += str
-
-        console.log(strFinal);
+    
+        // Escreve no arquivo
+        if(arquivoOuTerminal === "ARQ"){
+            utilWrite.escreverArquivo(strFinal);
+            return;
+        }
+    
+        // Escreve no terminal
+        if(arquivoOuTerminal === "TER"){
+            console.log(strFinal);
+        }
         
     },
 
@@ -54,7 +64,6 @@ var utilScriptPro = {
         return str.charAt(0).toUpperCase() + str.slice(1)
     },
 
-    
 }
 
 module.exports = utilScriptPro;

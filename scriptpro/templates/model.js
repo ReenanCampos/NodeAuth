@@ -4,12 +4,8 @@ const util = require("../util/util");
 var modelScriptPro = {
 
     useTemplate: function(tableName, results){
-        util.print(0, "const moment = require('moment');");
-        util.print(0, "moment.locale('pt-BR');");
-        util.print(0, "");
-        util.print(0, "//! Construtor");
-        util.print(0, "function " + tableName + "(entity, validar=false) {");
-        util.print(1, "this.validacao = {valido: false, msgErro: ['Não validado ainda']};");
+
+        finalNameAtual = "MODEL";
 
         util.print(0, "const moment = require('moment');");
         util.print(0, "moment.locale('pt-BR');");
@@ -18,7 +14,6 @@ var modelScriptPro = {
         util.print(0, "function " + tableName + "(entity, validar=false) {");
         util.print(1, "this.validacao = {valido: false, msgErro: ['Não validado ainda']};");
         
-
         for(let i=0; i < results.length; i++){
             util.print(1,"this." + results[i].COLUMN_NAME + " = " + util.verifyType(results[i].DATA_TYPE) + ";");
         }
@@ -178,6 +173,9 @@ var modelScriptPro = {
 
         util.print(0, "//! Export");
         util.print(0, "module.exports = " + tableName + ";");
+
+        finalNameAtual = "";
+
     }
     
 }

@@ -10,6 +10,8 @@ let mysql = require('mysql');
 let connection = mysql.createConnection({ host: 'localhost',port: 3306, user     : 'root', password : 'root', database : 'cmsteste' });
 let arquivoResetado = false;
 
+const ttt = require('./templates/model');
+
 
 //! AREA DE PREENCHIMENTO MANUAL (por enquanto)
 const tab = "    ";
@@ -52,172 +54,8 @@ connection.end();
 
 
 function inicio(tableName, results){
-    print(0, "const moment = require('moment');");
-    print(0, "moment.locale('pt-BR');");
-    print(0, "");
-    print(0, "//! Construtor");
-    print(0, "function " + tableName + "(entity, validar=false) {");
-    print(1, "this.validacao = {valido: false, msgErro: ['Não validado ainda']};");
 
-    for(let i=0; i < results.length; i++){
-        print(1,"this." + results[i].COLUMN_NAME + " = " + verifyType(results[i].DATA_TYPE) + ";");
-    }
-
-    print(1, "this.roles = [];");
-    print(0, "");
-    print(1, "if(entity != undefined){");
-
-    for(let i=0; i < results.length; i++){
-        print(2,"this." + results[i].COLUMN_NAME + " = entity." + results[i].COLUMN_NAME + " || " + verifyType(results[i].DATA_TYPE) + ";");
-    }
-
-    print(1, "}");
-    print(0, "");
-    print(1, "if(validar) this.validarEntidade();");
-    print(0, "}");
-    print(0, "");
-
-    print(0, tableName + ".prototype ={");
-    print(1, tableName + ": null");
-    print(0, "}");
-    print(0, "");
-
-    let columnsStrID = "";
-    let columnsStr = "";
-    for(let i=0; i < results.length; i++){
-
-        if(results[i].COLUMN_NAME == "id"){
-            columnsStrID += results[i].COLUMN_NAME + "=" + verifyType(results[i].DATA_TYPE);
-        }else{
-            columnsStrID += results[i].COLUMN_NAME;
-        }
-
-        if(i+1 != results.length){
-            columnsStrID += ", ";
-        }
-    }
-
-    for(let i=0; i < results.length; i++){
-        columnsStr += results[i].COLUMN_NAME;
-        if(i+1 != results.length){
-            columnsStr += ", ";
-        }
-    }
-
-    print(0, tableName + ".new = function(" + columnsStrID + "){");
-    print(1, "return new this(" + columnsStr + ");");
-    print(0, "}");
-    print(0, "");
-
-    print(0, "//! Getters & Setters");
-    for(let i=0; i < results.length; i++){
-
-        print(0, tableName + ".protoype.get" + capitalize(results[i].COLUMN_NAME) + " = function(){" + 
-            " return this." + results[i].COLUMN_NAME + ";" + 
-            " }");
-        
-        print(0, tableName + ".protoype.set" + capitalize(results[i].COLUMN_NAME) + " = function(" + results[i].COLUMN_NAME + "){" + 
-            " this." + results[i].COLUMN_NAME + " = " + results[i].COLUMN_NAME + 
-            " }");
-    }
-
-    print(0, tableName + ".protoype.get" + "Valido" + " = function(){" + 
-        " return this." + "valido" + ";" + 
-        " }");
-
-    print(0, tableName + ".protoype.set" + "Valido" + " = function(" + "valido"+ "){" + 
-        " this." + "valido" + " = " + "valido" + 
-        " }");
-    print(0, "");
-
-    print(0, "//! Úteis");
-    print(0, tableName + ".prototype.equals = function(other){");
-    for(let i=0; i < results.length; i++){
-
-        if(i == 0){ // Primeiro
-            print(1, "return other.get" + capitalize(results[i].COLUMN_NAME) + "() == this.get" + capitalize(results[i].COLUMN_NAME) + "()");
-        } else if(i+1 == results.length){ // Ultimo
-            print(2, "&& other.get" + capitalize(results[i].COLUMN_NAME) + "() == this.get" + capitalize(results[i].COLUMN_NAME) + "();");
-        } else { // Meio
-            print(2, "&& other.get" + capitalize(results[i].COLUMN_NAME) + "() == this.get" + capitalize(results[i].COLUMN_NAME) + "()");
-        }
-    }
-    print(0, "}");
-    print(0, "");
-
-    print(0, "//! Validadores");
-    
-    print(0, tableName + ".prototype.validarEntidade = function(){");
-    print(1, "var valido = true;");
-    print(1, "var msgErro = [];");
-    print(1, "");
-    print(1, "//* Vazio / Undefined");
-    print(1, "if(this === undefined){ msgErro.push('Entidade Inválida'); }");
-    
-    // Loop de undefined
-    for(let i=0; i < results.length; i++){
-        print(1, "if(this." + results[i].COLUMN_NAME + " === undefined){ msgErro.push('Campo " + capitalize(results[i].COLUMN_NAME) + " não pode ser vazio !'); }");
-    }
-    print(1, "");
-
-    /*
-    // Loop de vazio
-    // for(let i=0; i < results.length; i++){
-    //     if(results.DATA_TYPE == "varchar"){
-
-    //     }
-    //     print(1, "if(this." + results[i].COLUMN_NAME + " === undefined){ msgErro.push('Campo " + capitalize(results[i].COLUMN_NAME) + " precisa ser preenchido !'); }");
-    // }*/
-    
-    // Loop de tamanho
-    for(let i=0; i < results.length; i++){
-        print(1, "if(this." + results[i].COLUMN_NAME + ".length < 3){ msgErro.push('Campo " + capitalize(results[i].COLUMN_NAME) + " possui menos de 3 caracteres !'); }");
-    }
-    print(1, "");
-
-    print(1, "if(msgErro.length > 0) valido = false;");
-    print(1, "this.validacao = {valido: valido, msgErro: msgErro};");
-    print(0, "};");
-    print(0, "");
-    
-    print(0, tableName + ".prototype.validarEntidadeInsert = function(){");
-    print(1, "");
-    print(1, "var valido = true;");
-    print(1, "var msgErro = [];");
-    print(1, "");
-    print(1, "//TODO Código de validação para INSERT");
-    print(1, "");
-    print(1, "if(msgErro.length > 0) valido = false;");
-    print(1, "this.validacao.valido = valido;");
-    print(1, "this.validacao.msgErro = this.validacao.msgErro.concat(msgErro)");
-    print(0, "}");
-
-    print(0, tableName + ".prototype.validarEntidadeUpdate = function(){");
-    print(1, "");
-    print(1, "var valido = true;");
-    print(1, "var msgErro = [];");
-    print(1, "");
-    print(1, "//TODO Código de validação para UPDATE");
-    print(1, "");
-    print(1, "if(msgErro.length > 0) valido = false;");
-    print(1, "this.validacao.valido = valido;");
-    print(1, "this.validacao.msgErro = this.validacao.msgErro.concat(msgErro)");
-    print(0, "}");
-
-    print(0, tableName + ".prototype.validarEntidadeDelet = function(){");
-    print(1, "");
-    print(1, "var valido = true;");
-    print(1, "var msgErro = [];");
-    print(1, "");
-    print(1, "//TODO Código de validação para DELET");
-    print(1, "");
-    print(1, "if(msgErro.length > 0) valido = false;");
-    print(1, "this.validacao.valido = valido;");
-    print(1, "this.validacao.msgErro = this.validacao.msgErro.concat(msgErro)");
-    print(0, "}");
-
-    print(0, "//! Export");
-    print(0, "module.exports = " + tableName + ";");
+    ttt.useTemplate(tableName, results);
 
 }
 
@@ -245,50 +83,8 @@ function print(tabs=0, str = ""){
     
 }
 
-const capitalize = (s) => {
-    if (typeof s !== 'string') return ''
-    return s.charAt(0).toUpperCase() + s.slice(1)
-}
-
-function verifyType(tipoColuna){
-    if(tipoColuna == "char" || tipoColuna == "varchar"
-    || tipoColuna == "blob" || tipoColuna == "text"
-    || tipoColuna == "tinyblob" || tipoColuna == "tinytext"
-    || tipoColuna == "mediumblob" || tipoColuna == "mediumtext"
-    || tipoColuna == "longblob" || tipoColuna == "longtext"
-    || tipoColuna == "enum"){
-        return "''";
-    }
-    if(tipoColuna == "int" || tipoColuna == "tinyint"
-    || tipoColuna == "smallint" || tipoColuna == "mediumint"
-    || tipoColuna == "bigint"){
-        return "0";
-    }
-    if(tipoColuna == "float" || tipoColuna == "double"
-    || tipoColuna == "decimal"){
-        return "0.0";
-    }
-
-    if(tipoColuna == "datetime"){
-        return "moment('1970-01-01 00:00:01')";
-    }
-
-    if(tipoColuna == "date"){
-        return "moment('1970-01-01')";
-    }
-
-    if(tipoColuna == "timestamp"){
-        return "moment('1970-01-01 00:00:01')";
-    }
-
-    if(tipoColuna == "time"){
-        return "moment('00:00:01')";
-    }
-
-}
-
 function escreverArquivo(str = ""){
-    sleep(15);
+    //sleep(15);
     if(!arquivoResetado){
         fs.open(basePath + folder + filename, "w", function(err) {
             if(err) {

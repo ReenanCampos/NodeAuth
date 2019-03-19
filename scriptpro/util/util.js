@@ -64,6 +64,9 @@ var utilScriptPro = {
         return str.charAt(0).toUpperCase() + str.slice(1)
     },
 
+    resetarArquivo: function(){
+        utilWrite.resetarArquivo();
+    }
 }
 
 module.exports = utilScriptPro;

@@ -1,14 +1,19 @@
 
+
 basePath = __dirname.substr(0, __dirname.indexOf("scriptpro"));
 let mysql = require('mysql');
 let connection = mysql.createConnection({host: 'localhost', port: 3306, user: 'root', password: 'root', database: 'cmsteste'});
 const modelTemplate = require('./templates/model');
+const controllerTemplate = require('./templates/controller');
+const filterTemplate = require('./templates/filter');
+const serviceTemplate = require('./templates/service');
 
 
-finalModelName = "Model.js";
-finalFilterName = "Filter.js";
-finalControllerName = "Model.js";
-finalServiceName = "Model.js";
+finalModelName = "Model";
+finalFilterName = "Filter";
+finalControllerName = "Controller";
+finalServiceName = "Service";
+finalSqlRepName = "SqlRep";
 
 finalNameAtual = "";
 
@@ -16,14 +21,15 @@ finalNameAtual = "";
 //? AREA DE PREENCHIMENTO MANUAL (por enquanto)
 const tableName = 'Usuario';
 folder = "scriptprotest/models/";
-filename = "Usuario";
+filename = tableName;
 arquivoOuTerminal = "ARQ"; // ARQ -> salvar em arquivo || TER -> enviar no terminal
 
 queries = {
-    default: false, // gera os metodos: SelectByFilter, SelectALl, Insert, Update, Delet
+    default: true, // gera os metodos: SelectByFilter, SelectAll, Insert, Update, Delet
     apis:[ // Apis para gerar CASO default seja false
         {
         nome: "SelectById", // Nome Método
+        tipoMetodo: "consulta", // consulta OU filtro OU operacao
         tipoRetorno: "entidade", // entidade ou lista
         entrada: [ // Input do método
             {
@@ -34,6 +40,7 @@ queries = {
         },
         {
         nome: "SelectByAtivo", // Nome Método
+        tipoMetodo: "consulta", // consulta OU filtro OU operacao
         tipoRetorno: "lista", // entidade ou lista
         entrada: [ // Input do método
             {
@@ -41,7 +48,19 @@ queries = {
                 tipoVariavel: "boolean"
             }
         ]
+        },
+        {
+        nome: "InsertTeste2", // Nome Método
+        tipoMetodo: "operacao", // consulta OU filtro OU operacao 
+        tipoRetorno: "entidade", // entidade ou lista
+        entrada: [ // Input do método
+            {
+                nomeVariavel: "ativo",
+                tipoVariavel: "boolean"
+            }
+        ]
         }
+            
     ]
 }
 //? AREA DE PREENCHIMENTO MANUAL (por enquanto)
@@ -57,18 +76,22 @@ connection.query(getColumns, (error, results, fields) => {
     }
     if(tableName === "") return console.error(" -> Nome tabela está vazio !");
     if(results.length == 0) return console.error(" -> Nenhum dado encontrado !");
-    
+    console.log("cabo");
     inicio(tableName, results);
-
+    
 });
+
 connection.end(); 
-
-
 
 
 function inicio(tableName, results){
 
-    modelTemplate.useTemplate(tableName, results);
+    // modelTemplate.useTemplate(tableName, results);
+    // filterTemplate.useTemplate(tableName, results);
+    
+    // controllerTemplate.useTemplate(tableName, queries);
+    serviceTemplate.useTemplate(tableName, results, queries);
+    
 
 }
 
@@ -114,17 +137,3 @@ function inicio(tableName, results){
 
 
 
-
-
-// const mysql      = require('mysql');
-// const connection = mysql.createConnection({
-//     host     : 'localhost',
-//     port     : 3306,
-//     user     : 'root',
-//     password : 'root', // renan123 / root
-//     database : 'cmsteste',
-// });
-// connection.connect(function(err){
-//   if(err) return console.log(err);
-//   console.log('conectou!');
-// })

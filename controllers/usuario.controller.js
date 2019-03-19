@@ -2,6 +2,7 @@
 const Usuario = require("../models/Usuario");
 const UsuarioRole = require("../models/UsuarioRole");
 const usuarioService = require('../services/usuario.service');
+const util = require('../util/util');
 
 var UsuarioController = {
     all: function(req, res){
@@ -22,7 +23,7 @@ var UsuarioController = {
         if(entity.validacao.valido){
             usuarioService.insert(req, res, entity);
         }else{
-            res.status(400).json({status: 400, message: entity.validacao.msgErro})
+            util.newError(res, entity.validacao.msgErro, 400);
         } 
     },
 
@@ -32,7 +33,7 @@ var UsuarioController = {
         if(entity.validacao.valido){
             usuarioService.update(req, res, entity);
         }else{
-            res.status(400).json({status: 400, message: entity.validacao.msgErro})
+            util.newError(res, entity.validacao.msgErro, 400);
         }
     },
 
@@ -42,7 +43,7 @@ var UsuarioController = {
         if(entity.validacao.valido){
             usuarioService.delet(req, res, entity);
         }else{
-            res.status(400).json({status: 400, message: entity.validacao.msgErro})
+            util.newError(res, entity.validacao.msgErro, 400);
         }
     },
 
@@ -55,7 +56,7 @@ var UsuarioController = {
         if(entity.validacao.valido){
             usuarioService.insertRole(req, res, entity);
         }else{
-            res.status(400).json({status: 400, message: entity.validacao.msgErro})
+            util.newError(res, entity.validacao.msgErro, 400);
         } 
     },
 
@@ -65,7 +66,7 @@ var UsuarioController = {
         if(entity.validacao.valido){
             usuarioService.deletRole(req, res, entity);
         }else{
-            res.status(400).json({status: 400, message: entity.validacao.msgErro})
+            util.newError(res, entity.validacao.msgErro, 400);
         } 
     },
 

@@ -4,9 +4,10 @@ const util = require("../util/util");
 var modelScriptPro = {
 
     useTemplate: function(tableName, results){
-
+        
         finalNameAtual = "MODEL";
-
+        util.resetarArquivo();
+        
         util.print(0, "const moment = require('moment');");
         util.print(0, "moment.locale('pt-BR');");
         util.print(0, "");

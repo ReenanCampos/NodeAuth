@@ -5,8 +5,9 @@ const ip = require("ip");
 const moment = require("moment");
 moment.locale('pt-BR');
 const os = require("os");
+const util = require('../util/util');
 
-var db = require('../dbConnection');
+let db = require('../dbConnection');
 const usuarioSqlRep = require("../sqlrep/Usuario/All");
 const Usuario = require("../models/Usuario");
 
@@ -35,16 +36,16 @@ var UsuarioService = {
             [username, password],
             function (error, results, fields) {
 
-                if (error) { newError(res, error.message, 400); return; }
+                if (error) { util.newError(res, error.message, 400); return; }
 
-                if (results.length == 0) { newError(res, "Usuario ou Senha incorretos !", 400); return; }
+                if (results.length == 0) { util.newError(res, "Usuario ou Senha incorretos !", 400); return; }
 
-                var resultJson = convertJson(results);
+                var resultJson = util.convertJson(results);
 
                 let user = new Usuario(resultJson[0]);
 
-                if (user.ativo === 0) { newError(res, "Usuario inativado !", 401); return; }
-                if (user.bloqueado === 1) { newError(res, "Usuario bloqueado !", 401); return; }
+                if (user.ativo === 0) { util.newError(res, "Usuario inativado !", 401); return; }
+                if (user.bloqueado === 1) { util.newError(res, "Usuario bloqueado !", 401); return; }
 
                 user.roles = [];
                 for (var i in resultJson) {
@@ -82,24 +83,23 @@ var UsuarioService = {
         var results = db.query(usuarioSqlRep.SelectAll.SelectAll,
             function (error, results, fields) {
 
-                if (error) { newError(res, error.message, 400); return; }
+                if (error) { util.newError(res, error.message, 400); return; }
 
-                var resultJson = convertJson(results);
+                var resultJson = util.convertJson(results);
 
-                newResposta(res, resultJson);
+                util.newResposta(res, resultJson);
             });
     },
 
     insert: function (req, res, entity) {
-        var results = db.query(
-            usuarioSqlRep.Insert.Insert,
+        var results = db.query(usuarioSqlRep.Insert.Insert,
             [entity.id, entity.nome, entity.usuario, entity.email, entity.telefone, entity.senha, entity.dataNascimento, entity.ativo, entity.bloqueado, entity.id],
             function (error, results, fields) {
 
-                if (error) { newError(res, error.message, 400); return; }
+                if (error) { util.newError(res, error.message, 400); return; }
 
-                var resultJson = convertJson(results);
-                newResposta(res, entity.id);
+                var resultJson = util.convertJson(results);
+                util.newResposta(res, entity.id);
             });
     },
 
@@ -108,17 +108,17 @@ var UsuarioService = {
             [entity.nome, entity.usuario, entity.email, entity.telefone, entity.senha, entity.dataNascimento, entity.ativo, entity.bloqueado, entity.id],
             function (error, results, fields) {
 
-                if (error) { newError(res, error.message, 400); return; }
+                if (error) { util.newError(res, error.message, 400); return; }
 
                 if (!results.affectedRows) {
                     console.log(error);
-                    newError(res, "Nenhuma linha afetada", 400);
+                    util.newError(res, "Nenhuma linha afetada", 400);
                     return;
                 }
 
-                var resultJson = convertJson(results);
+                var resultJson = util.convertJson(results);
 
-                newResposta(res, entity.id);
+                util.newResposta(res, entity.id);
             });
     },
 
@@ -128,17 +128,17 @@ var UsuarioService = {
             [entity.id],
             function (error, results, fields) {
 
-                if (error) { newError(res, error.message, 400); return; }
+                if (error) { util.newError(res, error.message, 400); return; }
 
                 if (!results.affectedRows) {
                     console.log(error);
-                    newError(res, "Nenhuma linha afetada", 400);
+                    util.newError(res, "Nenhuma linha afetada", 400);
                     return;
                 }
 
-                var resultJson = convertJson(results);
+                var resultJson = util.convertJson(results);
 
-                newResposta(res, entity.id);
+                util.newResposta(res, entity.id);
             });
     },
 
@@ -148,11 +148,11 @@ var UsuarioService = {
             [entity.idUsuario, entity.idRole, new Date(), "EMBREVE"],
             function (error, results, fields) {
 
-                if (error) { newError(res, error.message, 400); return; }
+                if (error) { util.newError(res, error.message, 400); return; }
 
-                var resultJson = convertJson(results);
+                var resultJson = util.convertJson(results);
 
-                newResposta(res, resultJson ? resultJson : entity.id);
+                util.newResposta(res, resultJson ? resultJson : entity.id);
             });
     },
 
@@ -162,45 +162,19 @@ var UsuarioService = {
             [entity.id],
             function (error, results, fields) {
 
-                if (error) { newError(res, error.message, 400); return; }
+                if (error) { util.newError(res, error.message, 400); return; }
 
                 if (!results.affectedRows) {
                     console.log(error);
-                    newError(res, "Nenhuma linha afetada", 400);
+                    util.newError(res, "Nenhuma linha afetada", 400);
                     return;
                 }
 
-                var resultJson = convertJson(results.id);
-                newResposta(res, resultJson ? resultJson : entity.id);
+                var resultJson = util.convertJson(results.id);
+                util.newResposta(res, resultJson ? resultJson : entity.id);
             });
     }
 
-}
-
-
-//! Uteis
-
-function convertJson(results) {
-    var resultJson = JSON.stringify(results);
-    return JSON.parse(resultJson);
-}
-
-function newError(res, message, code, data = []) {
-    res.status(code).json(
-        {
-            status: code,
-            message: message,
-            data: data
-        });
-}
-
-function newResposta(res, data = [], code = 200, message = "Sucesso") {
-    res.status(code).json(
-        {
-            status: code,
-            message: message,
-            data: data
-        });
 }
 
 module.exports = UsuarioService;

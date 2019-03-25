@@ -110,11 +110,7 @@ var UsuarioService = {
 
                 if (error) { util.newError(res, error.message, 400); return; }
 
-                if (!results.affectedRows) {
-                    console.log(error);
-                    util.newError(res, "Nenhuma linha afetada", 400);
-                    return;
-                }
+                if (!results.affectedRows) { console.log(error); util.newError(res, "Nenhuma linha afetada", 400); return; }
 
                 var resultJson = util.convertJson(results);
 

@@ -12,7 +12,7 @@ var utilWriteScriptPro = {
     }, 
 
     escreverArquivo: function(str = ""){
-        sleep(15);
+        //sleep(15);
         if(!arquivoResetado){
             fs.open(basePath + folder + filename + escolherNome(), "w", function(err) {
                 if(err) {

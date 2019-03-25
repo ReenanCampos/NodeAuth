@@ -22,7 +22,7 @@ finalNameAtual = "";
 const tableName = 'Usuario';
 folder = "scriptprotest/models/";
 filename = tableName;
-arquivoOuTerminal = "ARQ"; // ARQ -> salvar em arquivo || TER -> enviar no terminal
+arquivoOuTerminal = "TER"; // ARQ -> salvar em arquivo || TER -> enviar no terminal
 
 queries = {
     default: true, // gera os metodos: SelectByFilter, SelectAll, Insert, Update, Delet
@@ -69,7 +69,7 @@ queries = {
 
 
 
-let getColumns = `SELECT TABLE_NAME, COLUMN_NAME, ORDINAL_POSITION, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH FROM information_schema.columns WHERE TABLE_NAME = '`+ tableName+`';`;
+let getColumns = `SELECT TABLE_NAME, COLUMN_NAME, ORDINAL_POSITION, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH FROM information_schema.columns WHERE TABLE_NAME = '`+ tableName+`' ORDER BY ORDINAL_POSITION;`;
 connection.query(getColumns, (error, results, fields) => {
     if (error) {
         return console.error(error.message);

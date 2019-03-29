@@ -12,13 +12,12 @@ var utilWriteScriptPro = {
     }, 
 
     escreverArquivo: function(str = ""){
-        //sleep(15);
+        sleep(15);
         if(!arquivoResetado){
             fs.open(basePath + folder + filename + escolherNome(), "w", function(err) {
                 if(err) {
                     return console.log(err);
                 }
-                console.log("The file has been cleaned");
             }); 
             arquivoResetado = true;
         }
@@ -34,7 +33,6 @@ var utilWriteScriptPro = {
 
 function escolherNome(){
     let finalFileName = ".js";
-    console.log(finalNameAtual);
     if(finalNameAtual == "MODEL"){
         return finalModelName + finalFileName;
     }else if(finalNameAtual == "FILTER"){
@@ -43,6 +41,16 @@ function escolherNome(){
         return finalControllerName + finalFileName;
     }else if(finalNameAtual == "SERVICE"){
         return finalServiceName + finalFileName;
+    }else if(finalNameAtual == "SQLREP"){
+        return finalSqlRepName + finalFileName;
+    }else if(finalNameAtual == "SQLSELECT"){
+        return finalSqlSelectName + finalFileName;
+    }else if(finalNameAtual == "SQLINSERT"){
+        return finalSqlInsertName + finalFileName;
+    }else if(finalNameAtual == "SQLUPDATE"){
+        return finalSqlUpdateName + finalFileName;
+    }else if(finalNameAtual == "SQLDELET"){
+        return finalSqlDeletName + finalFileName;
     }
 }
 

@@ -1,5 +1,4 @@
 
-
 basePath = __dirname.substr(0, __dirname.indexOf("scriptpro"));
 let mysql = require('mysql');
 let connection = mysql.createConnection({host: 'localhost', port: 3306, user: 'root', password: 'root', database: 'cmsteste'});
@@ -7,13 +6,21 @@ const modelTemplate = require('./templates/model');
 const controllerTemplate = require('./templates/controller');
 const filterTemplate = require('./templates/filter');
 const serviceTemplate = require('./templates/service');
+const sqlRepTemplate = require('./templates/sqlRep');
+const sqlTemplate = require('./templates/sql');
 
+var sleep = require('system-sleep');
 
 finalModelName = "Model";
 finalFilterName = "Filter";
 finalControllerName = "Controller";
 finalServiceName = "Service";
 finalSqlRepName = "SqlRep";
+
+finalSqlSelectName = "SelectByFilter";
+finalSqlInsertName = "Insert";
+finalSqlUpdateName = "Update";
+finalSqlDeletName = "Delet";
 
 finalNameAtual = "";
 
@@ -22,7 +29,7 @@ finalNameAtual = "";
 const tableName = 'Usuario';
 folder = "scriptprotest/models/";
 filename = tableName;
-arquivoOuTerminal = "TER"; // ARQ -> salvar em arquivo || TER -> enviar no terminal
+arquivoOuTerminal = "ARQ"; // ARQ -> salvar em arquivo || TER -> enviar no terminal
 
 queries = {
     default: true, // gera os metodos: SelectByFilter, SelectAll, Insert, Update, Delet
@@ -76,7 +83,7 @@ connection.query(getColumns, (error, results, fields) => {
     }
     if(tableName === "") return console.error(" -> Nome tabela está vazio !");
     if(results.length == 0) return console.error(" -> Nenhum dado encontrado !");
-    console.log("cabo");
+    pause(0, "Tabela(s) consultada(s), iniciando gerador")
     inicio(tableName, results);
     
 });
@@ -85,17 +92,34 @@ connection.end();
 
 
 function inicio(tableName, results){
+    pause(2000, "Lendo dados ...")
+    pause(2000, "Iniciando gerador")
 
-    // modelTemplate.useTemplate(tableName, results);
-    // filterTemplate.useTemplate(tableName, results);
-    
-    // controllerTemplate.useTemplate(tableName, queries);
+    pause(1000, "Atualizando ~> " + tableName + finalModelName);
+    modelTemplate.useTemplate(tableName, results);
+
+    pause(1000, "Atualizando ~> " + tableName + finalFilterName);
+    filterTemplate.useTemplate(tableName, results);
+
+    pause(1000, "Atualizando ~> " + tableName + finalControllerName);
+    controllerTemplate.useTemplate(tableName, queries);
+
+    pause(1000, "Atualizando ~> " + tableName + finalServiceName);
     serviceTemplate.useTemplate(tableName, results, queries);
     
-
+    pause(1000, "Atualizando ~> " + tableName + finalSqlRepName);
+    sqlRepTemplate.useTemplate(tableName, results, queries);
+    
+    pause(1000, "Atualizando ~> " + finalSqlSelectName + " / " + finalSqlInsertName + " / " + finalSqlUpdateName + " / " + finalSqlDeletName);
+    sqlTemplate.useTemplate(tableName, results, queries);
+    
+    pause(500, "Geração finalizada. Obrigado pela preferência !")
 }
 
-
+function pause (tempoMs, txt="Não definido."){
+    console.log("[ScriptPro] " + txt);
+    sleep(tempoMs);
+}
 
 /**
  * List prompt example

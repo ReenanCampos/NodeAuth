@@ -2,29 +2,17 @@
 //! Construtor
 function Usuario(entity, validar=false) {
     this.validacao = {valido: false, msgErro: ['Não validado ainda']};
-    this.id = "";
-    this.nome = "";
-    this.usuario = "";
-    this.email = "";
-    this.telefone = "";
-    this.senha = "";
-    this.dataNascimento = new Date();
-    this.ativo = 0;
-    this.bloqueado = 0;
-    this.roles = [];
-    
-    
     if(entity != undefined){
-        this.id = entity.id ||  "";
-        this.nome = entity.nome ||  "";
-        this.usuario = entity.usuario || "";
-        this.email = entity.email ||  "";
-        this.telefone = entity.telefone ||  "";
-        this.senha = entity.senha ||  "";
-        this.dataNascimento = entity.dataNascimento ||  new Date();
-        this.ativo = entity.ativo ||  0;
-        this.bloqueado = entity.bloqueado ||  0;
-        this.roles = entity.roles || [];
+        this.id = entity.id;
+        this.nome = entity.nome;
+        this.usuario = entity.usuario;
+        this.email = entity.email;
+        this.telefone = entity.telefone;
+        this.senha = entity.senha;
+        this.dataNascimento = entity.dataNascimento;
+        this.ativo = entity.ativo;
+        this.bloqueado = entity.bloqueado;
+        this.roles = entity.roles;
     }
 
     if(validar) this.validarEntidade();

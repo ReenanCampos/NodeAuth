@@ -18,7 +18,7 @@
     "express-jwt": "^5.3.1",
     "inquirer": "^6.2.2",
     "ip": "^1.1.5",
-    "jsonwebtoken": "^8.5.0",
+    "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mysql": "^2.16.0",
     "os": "^0.1.1",

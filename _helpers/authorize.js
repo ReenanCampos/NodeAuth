@@ -23,7 +23,7 @@ function authorize(roles = []) {
         
         // authorize based on user role
         (req, res, next) => {
-
+            
             if(!verificaExistencia(req.user)){
                 // user's token is not valid
                 return res.status(401).json({code: 401, error: 'Unauthorized', message: "Token inválido"});

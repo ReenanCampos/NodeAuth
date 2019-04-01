@@ -68,20 +68,20 @@ var modelScriptPro = {
         util.print(0, "//! Getters & Setters");
         for(let i=0; i < results.length; i++){
 
-            util.print(0, tableName + ".protoype.get" + util.capitalize(results[i].COLUMN_NAME) + " = function(){" + 
+            util.print(0, tableName + ".prototype.get" + util.capitalize(results[i].COLUMN_NAME) + " = function(){" + 
                 " return this." + results[i].COLUMN_NAME + ";" + 
                 " }");
             
-            util.print(0, tableName + ".protoype.set" + util.capitalize(results[i].COLUMN_NAME) + " = function(" + results[i].COLUMN_NAME + "){" + 
+            util.print(0, tableName + ".prototype.set" + util.capitalize(results[i].COLUMN_NAME) + " = function(" + results[i].COLUMN_NAME + "){" + 
                 " this." + results[i].COLUMN_NAME + " = " + results[i].COLUMN_NAME + 
                 " }");
         }
 
-        util.print(0, tableName + ".protoype.get" + "Valido" + " = function(){" + 
+        util.print(0, tableName + ".prototype.get" + "Valido" + " = function(){" + 
             " return this." + "valido" + ";" + 
             " }");
 
-        util.print(0, tableName + ".protoype.set" + "Valido" + " = function(" + "valido"+ "){" + 
+        util.print(0, tableName + ".prototype.set" + "Valido" + " = function(" + "valido"+ "){" + 
             " this." + "valido" + " = " + "valido" + 
             " }");
         util.print(0, "");

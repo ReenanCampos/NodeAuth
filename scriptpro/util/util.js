@@ -42,18 +42,26 @@ var utilScriptPro = {
         }
 
         if(tipoColuna == "datetime"){
+            return '';
+            //! Cancelado por enquanto 01/04/2019
             return "moment('1970-01-01 00:00:01')";
         }
 
         if(tipoColuna == "date"){
+            return '';
+            //! Cancelado por enquanto 01/04/2019
             return "moment('1970-01-01')";
         }
 
         if(tipoColuna == "timestamp"){
+            return '';
+            //! Cancelado por enquanto 01/04/2019
             return "moment('1970-01-01 00:00:01')";
         }
 
         if(tipoColuna == "time"){
+            return '';
+            //! Cancelado por enquanto 01/04/2019
             return "moment('00:00:01')";
         }
 

@@ -16,7 +16,7 @@ const USER_PREFIX = "/usuario";
 
 //? User
 router.post(USER_PREFIX + '/authenticate', UsuarioController.authenticate);  
-router.get(USER_PREFIX + '/selectAll', UsuarioController.selectAll);  
+router.post(USER_PREFIX + '/selectAll', authorize(RoleAuth.Usuario), UsuarioController.selectAll);  
 router.post(USER_PREFIX + '/insert', UsuarioController.insert);  
 router.post(USER_PREFIX + '/update', UsuarioController.update);  
 router.post(USER_PREFIX + '/delet', UsuarioController.delet);  

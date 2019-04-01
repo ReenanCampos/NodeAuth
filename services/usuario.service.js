@@ -79,8 +79,8 @@ var UsuarioService = {
             });
     },
 
-    selectAll: function (req, res) {
-        var results = db.query(usuarioSqlRep.SelectAll.SelectAll,
+    selectAll: function (req, res, filter) {
+        var results = db.query(usuarioSqlRep.SelectAll.SelectAll(filter),
             function (error, results, fields) {
 
                 if (error) { util.newError(res, error.message, 400); return; }

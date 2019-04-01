@@ -8,7 +8,6 @@ var serviceScriptPro = {
         finalNameAtual = "SERVICE";
         util.resetarArquivo();
 
-
         util.print(0, "const moment = require('moment');");
         util.print(0, "moment.locale('pt-BR');");
         util.print(0, "let db = require('../dbConnection');");
@@ -72,8 +71,8 @@ var serviceScriptPro = {
 // gera os metodos: SelectByFilter, SelectAll, Insert, Update, Delet
 function usarDefault(tableName, results) {
 
-    util.print(1, "selectByFilter: function(req, res){");
-    util.print(2, "var results = db.query( " + tableName + finalSqlRepName + ".SelectByFilter.SelectByFilter,");
+    util.print(1, "selectByFilter: function(req, res, filter){");
+    util.print(2, "var results = db.query( " + tableName + finalSqlRepName + ".SelectByFilter.SelectByFilter(filter),");
     util.print(3, "function (error, results, fields) {");
     util.print(3, "");
     util.print(4, "if (error) { util.newError(res, error.message, 400); return; }");

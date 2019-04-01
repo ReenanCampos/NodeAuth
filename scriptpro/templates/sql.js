@@ -32,16 +32,69 @@ function usarDefault(tableName, results) {
 //? Precisa saber como funciona passar parametros para o SqlRep e gerar o filtro !
 function sqlSelectFilter(tableName, results, filter){
     finalNameAtual = "SQLSELECT";
-    util.resetarArquivo();        
-    templateInicial("Select");
-    util.print(1, "SELECT")
+    util.resetarArquivo();     
+
+
+    util.print(0, "const util = require('../../util/util');");
+    util.print(0, "const moment = require('moment');");
+    util.print(0, "");
+    util.print(1, "module.exports = {");
+    util.print(2, "SelectByFilter: function SelectAll(filter){");
+    util.print(3, "var statement = '';");
+    util.print(3, "statement += 'SELECT';");
+    for (let i = 0; i < results.length; i++) {
+        util.print(3, "statement += ' " + results[i].COLUMN_NAME + "';");
+    }
+    util.print(3, "statement += ' FROM Usuario';");
+
+    util.print(3, "if(filter != undefined){");
+    util.print(3, "let whereUsado = false, usarAnd = false;");
+    util.print(3, "if(!util.isUndefinedOrEmpty(filter.id)){");
+    util.print(4, "if(!whereUsado){ statement += ' WHERE'; whereUsado = true; }");
+    util.print(4, "statement += ' Usuario.id = ' + filter.id;");
+    util.print(4, "usarAnd = true;");
+    util.print(3, "}");
+    for (let i = 1; i < results.length; i++) {
+        if(results[i].DATA_TYPE == "char" || results[i].DATA_TYPE == "varchar"){
+            util.print(3, "if(!util.isUndefinedOrEmpty(filter.id)){");
+            util.print(4, "if(!whereUsado){ statement += ' WHERE'; whereUsado = true; }");
+            util.print(4, "if(usarAnd){ statement += ' AND'; }");
+            util.print(4, "statement += \" "+tableName+"."+results[i].COLUMN_NAME+" like '%\" + filter."+results[i].COLUMN_NAME+" + \"%'\";");
+            util.print(4, "usarAnd = true;");
+            util.print(3, "}");
+        }else if (results[i].DATA_TYPE == "tinyint" || results[i].DATA_TYPE == "int"
+               || results[i].DATA_TYPE == "smallint" || results[i].DATA_TYPE == "mediumint"
+               || results[i].DATA_TYPE == "bigint"
+               || results[i].DATA_TYPE == "float" || results[i].DATA_TYPE == "double"
+               || results[i].DATA_TYPE == "decimal"){
+            util.print(3, "if(!util.isUndefinedOrEmpty(filter.id)){");
+            util.print(4, "if(!whereUsado){ statement += ' WHERE'; whereUsado = true; }");
+            util.print(4, "if(usarAnd){ statement += ' AND'; }");
+            util.print(4, "statement += \" "+tableName+"."+results[i].COLUMN_NAME+" = \" + filter."+results[i].COLUMN_NAME+";");
+            statement += " Usuario.id = " + filter.id;
+            util.print(4, "usarAnd = true;");
+            util.print(3, "}");
+        }else if(results[i].DATA_TYPE == "datetime" || results[i].DATA_TYPE == "date"
+               || results[i].DATA_TYPE == "timestamp" || results[i].DATA_TYPE == "time"){
+            util.print(3, "//!TODO Gerador de selectbyfilter por DATA não implementado ! 01/04/2019");
+        }   
+        
+    }
+    util.print(2, "return statement;");
+    util.print(1, "}");
+    util.print(0, "};");
+
+/*
+TODO Select comum
+    util.print(1, "SELECT");
     for (let i = 0; i < results.length; i++) {
         if(results[i].COLUMN_NAME != "id") util.print(2, "," + results[i].COLUMN_NAME + " = ?");
         else util.print(2, " " + results[i].COLUMN_NAME);
     }
     util.print(1, "FROM");
     util.print(2, tableName + ";");
-    templateFinal();
+*/
+
 }
 
 function sqlInsert(tableName, results){

@@ -1,5 +1,7 @@
 ﻿
 const Usuario = require("../models/Usuario");
+const UsuarioFilter = require("../models/UsuarioFilter");
+
 const UsuarioRole = require("../models/UsuarioRole");
 const usuarioService = require('../services/usuario.service');
 const util = require('../util/util');
@@ -14,7 +16,12 @@ var UsuarioController = {
     },
 
     selectAll: function(req, res, next){
-        usuarioService.selectAll(req, res);
+        var filter = new UsuarioFilter(req.body, true);
+        if(filter.validacao.valido){
+            usuarioService.selectAll(req, res, filter);
+        }else{
+            util.newError(res, filter.validacao.msgErro, 400);
+        } 
     },
 
     insert: function(req, res, next){

@@ -14,12 +14,6 @@ var filterScriptPro = {
         util.print(0, "//! Construtor");
         util.print(0, "function " + tableName + finalFilterName + "(entity, validar=false) {");
         util.print(1, "this.validacao = {valido: false, msgErro: ['Não validado ainda']};");
-        
-        for(let i=0; i < results.length; i++){
-            util.print(1,"this." + results[i].COLUMN_NAME + " = " + util.verifyType(results[i].DATA_TYPE) + ";");
-        }
-
-        util.print(1, "this.roles = [];");
         util.print(0, "");
         util.print(1, "if(entity != undefined){");
 
@@ -29,7 +23,7 @@ var filterScriptPro = {
 
         util.print(1, "}");
         util.print(0, "");
-        util.print(1, "if(validar) this.validarEntidade();");
+        util.print(1, "if(validar) this.validarFiltro(entity);");
         util.print(0, "}");
         util.print(0, "");
 
@@ -68,25 +62,46 @@ var filterScriptPro = {
         util.print(0, "//! Getters & Setters");
         for(let i=0; i < results.length; i++){
 
-            util.print(0, tableName + finalFilterName + ".protoype.get" + util.capitalize(results[i].COLUMN_NAME) + " = function(){" + 
+            util.print(0, tableName + finalFilterName + ".prototype.get" + util.capitalize(results[i].COLUMN_NAME) + " = function(){" + 
                 " return this." + results[i].COLUMN_NAME + ";" + 
                 " }");
             
-            util.print(0, tableName + finalFilterName + ".protoype.set" + util.capitalize(results[i].COLUMN_NAME) + " = function(" + results[i].COLUMN_NAME + "){" + 
+            util.print(0, tableName + finalFilterName + ".prototype.set" + util.capitalize(results[i].COLUMN_NAME) + " = function(" + results[i].COLUMN_NAME + "){" + 
                 " this." + results[i].COLUMN_NAME + " = " + results[i].COLUMN_NAME + 
                 " }");
         }
 
-        util.print(0, tableName + finalFilterName + ".protoype.get" + "Valido" + " = function(){" + 
-            " return this." + "valido" + ";" + 
-            " }");
-
-        util.print(0, tableName + finalFilterName + ".protoype.set" + "Valido" + " = function(" + "valido"+ "){" + 
-            " this." + "valido" + " = " + "valido" + 
-            " }");
-
         util.print(0, "");
-
+        util.print(0, "//! Validadores");
+        util.print(0, tableName + finalFilterName + ".prototype.validarFiltro = function(filter) {");
+        util.print(1, "var valido = true;");
+        util.print(1, "var msgErro = [];");
+        util.print(1, "var keyNames = Object.keys(filter);");
+        util.print(1, "");
+        util.print(1, "for(var i in keyNames){");
+        for(let i=0; i < results.length; i++){
+            if(i==0){
+                util.print(2, "if(keyNames[i] != '" + results[i].COLUMN_NAME + "'");
+            }else if(i+1 == results.length){
+                util.print(2, "&& keyNames[i] != '" + results[i].COLUMN_NAME + "'){");
+            }else {
+                util.print(2, "&& keyNames[i] != '" + results[i].COLUMN_NAME + "'");
+            }
+        }
+        util.print(3, "msgErro.push('Campo [' + keyNames[i] + '] inválido para esse filtro');");
+        util.print(2, "}");
+        util.print(1, "}");
+        util.print(2, "if(msgErro.length == 0){");
+        util.print(2, "//* Vazio / Undefined");
+        util.print(2, "if(this === undefined){");
+        util.print(3, "msgErro.push('Entidade inválida');");
+        util.print(2, "}");
+        util.print(1, "}");
+        util.print(1, "");
+        util.print(1, "if(msgErro.length > 0) valido = false;");
+        util.print(1, "this.validacao = {valido: valido, msgErro: msgErro};");
+        util.print(0, "};");
+        util.print(0, "");
         util.print(0, "//! Export");
         util.print(0, "module.exports = " + tableName + finalFilterName + ";");
 

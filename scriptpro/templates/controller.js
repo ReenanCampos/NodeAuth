@@ -75,6 +75,16 @@ function usarDefault(tableName) {
     util.print(1, "},");
     util.print(0, "");
 
+    util.print(1, "selectByFilter: function(req, res, next){");
+    util.print(2, "var filter = new " + tableName + finalFilterName+ "(req.body, true)");
+    util.print(2, "if(filter.validacao.valido){");
+    util.print(3, tableName + finalServiceName + ".selectByFilter(req, res, filter);");
+    util.print(2, "}else{");
+    util.print(3, "newError(res, filter.validacao.msgErro, 400);");
+    util.print(2, "}");
+    util.print(1, "},");
+
+
     util.print(1, "selectAll: function(req, res, next){");
     util.print(2, tableName + finalServiceName + ".selectAll(req, res);");
     util.print(1, "},");

@@ -7,7 +7,6 @@ var sqlRepScriptPro = {
 
         finalNameAtual = "SQLREP";
         util.resetarArquivo();
-
         if (queries.default) {
 
             usarDefault(tableName, results);
@@ -29,6 +28,7 @@ var sqlRepScriptPro = {
             util.print(0, "");
         }
         
+        util.escreverArquivo();
         finalNameAtual = "";
     }
 

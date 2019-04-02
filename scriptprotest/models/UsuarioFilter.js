@@ -13,7 +13,7 @@ function UsuarioFilter(entity, validar=false) {
         this.email = entity.email || '';
         this.telefone = entity.telefone || '';
         this.senha = entity.senha || '';
-        this.dataNascimento = entity.dataNascimento || moment('1970-01-01 00:00:01');
+        this.dataNascimento = entity.dataNascimento || '';
         this.ativo = entity.ativo || 0;
         this.bloqueado = entity.bloqueado || 0;
     }

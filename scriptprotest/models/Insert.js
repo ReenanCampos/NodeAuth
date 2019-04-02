@@ -3,7 +3,7 @@ module.exports = {
 Insert: `
     INSERT INTO Usuario (
         ,nome
-        ,batata
+        ,usuario
         ,email
         ,telefone
         ,senha

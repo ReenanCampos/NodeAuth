@@ -11,17 +11,29 @@ const sqlTemplate = require('./templates/sql');
 
 var sleep = require('system-sleep');
 
+// Para o sistema de encontrar e definir nome dos arquivos
 finalModelName = "Model";
 finalFilterName = "Filter";
 finalControllerName = "Controller";
 finalServiceName = "Service";
 finalSqlRepName = "SqlRep";
-
 finalSqlSelectName = "SelectByFilter";
 finalSqlInsertName = "Insert";
 finalSqlUpdateName = "Update";
 finalSqlDeletName = "Delet";
 
+// Para salvar os txt antes de enviar aos arquivos
+txtFileModel = "";
+txtFileFilter = "";
+txtFileController = "";
+txtFileService = "";
+txtFileSqlRep = "";
+txtFileSelect = "";
+txtFileInsert = "";
+txtFileUpdate = "";
+txtFileDelet = "";
+
+// Controle de escritura de arquivo
 finalNameAtual = "";
 
 
@@ -118,7 +130,7 @@ function inicio(tableName, results){
 
 function pause (tempoMs, txt="Não definido."){
     console.log("[ScriptPro] " + txt);
-    sleep(tempoMs);
+    //sleep(tempoMs);
 }
 
 /**

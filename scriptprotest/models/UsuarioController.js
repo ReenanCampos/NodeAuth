@@ -14,6 +14,14 @@ var UsuarioController = {
         }
     },
 
+    selectByFilter: function(req, res, next){
+        var filter = new UsuarioFilter(req.body, true)
+        if(filter.validacao.valido){
+            UsuarioService.selectByFilter(req, res, filter);
+        }else{
+            newError(res, filter.validacao.msgErro, 400);
+        }
+    },
     selectAll: function(req, res, next){
         UsuarioService.selectAll(req, res);
     },

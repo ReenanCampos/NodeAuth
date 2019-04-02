@@ -7,7 +7,6 @@ var modelScriptPro = {
         
         finalNameAtual = "MODEL";
         util.resetarArquivo();
-        
         util.print(0, "const moment = require('moment');");
         util.print(0, "moment.locale('pt-BR');");
         util.print(0, "");
@@ -16,7 +15,7 @@ var modelScriptPro = {
         util.print(1, "this.validacao = {valido: false, msgErro: ['Não validado ainda']};");
         
         for(let i=0; i < results.length; i++){
-            util.print(1,"this." + results[i].COLUMN_NAME + " = " + util.verifyType(results[i].DATA_TYPE) + ";");
+            util.print(1,"this." + results[i].COLUMN_NAME + " = " + util.verifyType(results[i].DATA_TYPE) + "; ");
         }
 
         util.print(1, "this.roles = [];");
@@ -175,6 +174,7 @@ var modelScriptPro = {
         util.print(0, "//! Export");
         util.print(0, "module.exports = " + tableName + ";");
 
+        util.escreverArquivo();
         finalNameAtual = "";
 
     }

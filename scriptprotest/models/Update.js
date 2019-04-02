@@ -5,7 +5,7 @@ Update: `
         Usuario
     SET
          nome = ?
-        ,batata = ?
+        ,usuario = ?
         ,email = ?
         ,telefone = ?
         ,senha = ?

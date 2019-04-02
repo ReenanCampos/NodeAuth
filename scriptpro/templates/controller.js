@@ -7,7 +7,6 @@ var controllerScriptPro = {
 
         finalNameAtual = "CONTROLLER";
         util.resetarArquivo();
-
         util.print(0, "const " + tableName + " = require('../models/" + tableName + finalModelName + "');");
         util.print(0, "const " + tableName + finalServiceName + " = require('../services/" + tableName + finalServiceName + "');");
         util.print(0, "const util = require('../util/util');");
@@ -56,6 +55,7 @@ var controllerScriptPro = {
         util.print(0, "");
         util.print(0, "module.exports = " + tableName + finalControllerName + ";");
 
+        util.escreverArquivo();
         finalNameAtual = "";
 
     }

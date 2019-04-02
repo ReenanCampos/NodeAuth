@@ -7,7 +7,6 @@ var filterScriptPro = {
         
         finalNameAtual = "FILTER";
         util.resetarArquivo();
-        
         util.print(0, "const moment = require('moment');");
         util.print(0, "moment.locale('pt-BR');");
         util.print(0, "");
@@ -105,6 +104,7 @@ var filterScriptPro = {
         util.print(0, "//! Export");
         util.print(0, "module.exports = " + tableName + finalFilterName + ";");
 
+        util.escreverArquivo();
         finalNameAtual = "";
 
     }

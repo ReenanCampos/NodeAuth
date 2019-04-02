@@ -7,7 +7,6 @@ var serviceScriptPro = {
 
         finalNameAtual = "SERVICE";
         util.resetarArquivo();
-
         util.print(0, "const moment = require('moment');");
         util.print(0, "moment.locale('pt-BR');");
         util.print(0, "let db = require('../dbConnection');");
@@ -62,6 +61,7 @@ var serviceScriptPro = {
         util.print(0, "module.exports = " + tableName + finalServiceName + ";");
         util.print(0, "");
 
+        util.escreverArquivo();
         finalNameAtual = "";
 
     }
@@ -129,7 +129,7 @@ function usarDefault(tableName, results) {
     util.print(3, "");
     util.print(4, "if (error) {util.newError(res, error.message, 400); return; }");
     util.print(3, "");
-    util.print(3, "if (!results.affectedRows) { util.newError(res, 'Nenhuma linha afetada', 400); return; }");
+    util.print(4, "if (!results.affectedRows) { util.newError(res, 'Nenhuma linha afetada', 400); return; }");
     util.print(3, "");
     util.print(4, "var resultJson = util.convertJson(results);");
     util.print(4, "util.newResposta(res, entity.id);");
@@ -144,7 +144,7 @@ function usarDefault(tableName, results) {
     util.print(3, "");
     util.print(4, "if (error) {util.newError(res, error.message, 400); return; }");
     util.print(3, "");
-    util.print(3, "if (!results.affectedRows) { util.newError(res, 'Nenhuma linha afetada', 400); return; }");
+    util.print(4, "if (!results.affectedRows) { util.newError(res, 'Nenhuma linha afetada', 400); return; }");
     util.print(3, "");
     util.print(4, "var resultJson = util.convertJson(results);");
     util.print(4, "util.newResposta(res, entity.id);");

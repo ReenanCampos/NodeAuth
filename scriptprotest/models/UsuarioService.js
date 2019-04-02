@@ -8,8 +8,8 @@ const UsuarioSqlRep = require('../sqlrep/Usuario/UsuarioService');
 
 var UsuarioService = {
 
-    selectByFilter: function(req, res){
-        var results = db.query( UsuarioSqlRep.SelectByFilter.SelectByFilter,
+    selectByFilter: function(req, res, filter){
+        var results = db.query( UsuarioSqlRep.SelectByFilter.SelectByFilter(filter),
             function (error, results, fields) {
             
                 if (error) { util.newError(res, error.message, 400); return; }
@@ -21,7 +21,7 @@ var UsuarioService = {
     },
     insert: function(req, res, entity){
         var results = db.query( UsuarioSqlRep.Insert.Insert,
-            [entity.id, entity.nome, entity.batata, entity.email, entity.telefone, entity.senha, entity.dataNascimento, entity.ativo, entity.bloqueado],
+            [entity.id, entity.nome, entity.usuario, entity.email, entity.telefone, entity.senha, entity.dataNascimento, entity.ativo, entity.bloqueado],
             function (error, results, fields) {
             
                 if (error) {util.newError(res, error.message, 400); return; }
@@ -32,12 +32,12 @@ var UsuarioService = {
         },
     update: function(req, res, entity){
         var results = db.query( UsuarioSqlRep.Update.Update,
-            [entity.nome, entity.batata, entity.email, entity.telefone, entity.senha, entity.dataNascimento, entity.ativo, entity.bloqueado, entity.id],
+            [entity.nome, entity.usuario, entity.email, entity.telefone, entity.senha, entity.dataNascimento, entity.ativo, entity.bloqueado, entity.id],
             function (error, results, fields) {
             
                 if (error) {util.newError(res, error.message, 400); return; }
             
-            if (!results.affectedRows) { util.newError(res, 'Nenhuma linha afetada', 400); return; }
+                if (!results.affectedRows) { util.newError(res, 'Nenhuma linha afetada', 400); return; }
             
                 var resultJson = util.convertJson(results);
                 util.newResposta(res, entity.id);
@@ -50,7 +50,7 @@ var UsuarioService = {
             
                 if (error) {util.newError(res, error.message, 400); return; }
             
-            if (!results.affectedRows) { util.newError(res, 'Nenhuma linha afetada', 400); return; }
+                if (!results.affectedRows) { util.newError(res, 'Nenhuma linha afetada', 400); return; }
             
                 var resultJson = util.convertJson(results);
                 util.newResposta(res, entity.id);

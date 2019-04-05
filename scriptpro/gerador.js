@@ -1,5 +1,83 @@
 
+
+var inquirer = require("inquirer");
+var fs = require('fs');
+/*
+"use strict";
+
+var BottomBar = require('../node_modules/inquirer/lib/ui/bottom-bar');
+var cmdify = require('cmdify');
+
+var loader = ['/ Installing', '| Installing', '\\ Installing', '- Installing'];
+var i = 4;
+var ui = new BottomBar({ bottomBar: loader[i % 4] });
+
+setInterval(() => {
+  ui.updateBottomBar(loader[i++ % 4]);
+}, 300);
+
+var spawn = require('child_process').spawn;
+
+var cmd = spawn(cmdify('npm'), ['-g', 'install', 'inquirer'], { stdio: 'pipe' });
+cmd.stdout.pipe(ui.log);
+cmd.on('close', () => {
+  ui.updateBottomBar('Installation done!\n');
+  process.exit();
+});
+
+
+
+inquirer.registerPrompt("directory", require("inquirer-select-directory"));
+
+inquirer.prompt([{
+    type: "directory",
+    name: "path",
+    message: "Qual é a pasta raiz do projeto?",
+    basePath: "./",
+    options: {
+      displayFiles: false
+    }
+}]).then(function(answers) {
+    //fs.writeFile(answers.path + '/file.txt', 'Whoa! You have created this file');
+    console.log(answers);
+});
+
+inquirer
+  .prompt([
+    {
+      type: 'list',
+      name: 'theme',
+      message: 'What do you want to do?',
+      choices: [
+        'Order a pizza',
+        'Make a reservation',
+        new inquirer.Separator(),
+        'Ask for opening hours',
+        {
+          name: 'Contact support',
+          disabled: 'Unavailable at this time'
+        },
+        'Talk to the receptionist'
+      ]
+    },
+    {
+      type: 'list',
+      name: 'size',
+      message: 'What size do you need?',
+      choices: ['Jumbo', 'Large', 'Standard', 'Medium', 'Small', 'Micro'],
+      filter: function(val) {
+        return val.toLowerCase();
+      }
+    }
+  ])
+  .then(answers => {
+    console.log(JSON.stringify(answers, null, '  '));
+  });*/
+
 basePath = __dirname.substr(0, __dirname.indexOf("scriptpro"));
+console.log(__dirname);
+console.log(basePath);
+
 let mysql = require('mysql');
 let connection = mysql.createConnection({host: 'localhost', port: 3306, user: 'root', password: 'root', database: 'cmsteste'});
 const modelTemplate = require('./templates/model');
@@ -33,13 +111,24 @@ txtFileInsert = "";
 txtFileUpdate = "";
 txtFileDelet = "";
 
+// Caminho pastas padrão
+pathFileModel = "Models/";
+pathFileFilter = "Filters/";
+pathFileController = "Controllers/";
+pathFileService = "Services/";
+pathFileSqlRep = "SqlReps/";
+pathFileSelect = "SqlFiles/";
+pathFileInsert = "SqlFiles/";
+pathFileUpdate = "SqlFiles/";
+pathFileDelet = "SqlFiles/";
+
 // Controle de escritura de arquivo
 finalNameAtual = "";
-
 
 //? AREA DE PREENCHIMENTO MANUAL (por enquanto)
 const tableName = 'Usuario';
 folder = "scriptprotest/models/";
+
 filename = tableName;
 arquivoOuTerminal = "ARQ"; // ARQ -> salvar em arquivo || TER -> enviar no terminal
 
@@ -105,27 +194,27 @@ connection.end();
 
 function inicio(tableName, results){
     pause(2000, "Lendo dados ...")
-    pause(2000, "Iniciando gerador")
+    //pause(2000, "Iniciando gerador")
 
-    pause(1000, "Atualizando ~> " + tableName + finalModelName);
+    //pause(1000, "Atualizando ~> " + tableName + finalModelName);
     modelTemplate.useTemplate(tableName, results);
 
-    pause(1000, "Atualizando ~> " + tableName + finalFilterName);
+    //pause(1000, "Atualizando ~> " + tableName + finalFilterName);
     filterTemplate.useTemplate(tableName, results);
 
-    pause(1000, "Atualizando ~> " + tableName + finalControllerName);
+    //pause(1000, "Atualizando ~> " + tableName + finalControllerName);
     controllerTemplate.useTemplate(tableName, queries);
 
-    pause(1000, "Atualizando ~> " + tableName + finalServiceName);
+    //pause(1000, "Atualizando ~> " + tableName + finalServiceName);
     serviceTemplate.useTemplate(tableName, results, queries);
     
-    pause(1000, "Atualizando ~> " + tableName + finalSqlRepName);
+    //pause(1000, "Atualizando ~> " + tableName + finalSqlRepName);
     sqlRepTemplate.useTemplate(tableName, results, queries);
     
-    pause(1000, "Atualizando ~> " + finalSqlSelectName + " / " + finalSqlInsertName + " / " + finalSqlUpdateName + " / " + finalSqlDeletName);
+    //pause(1000, "Atualizando ~> " + finalSqlSelectName + " / " + finalSqlInsertName + " / " + finalSqlUpdateName + " / " + finalSqlDeletName);
     sqlTemplate.useTemplate(tableName, results, queries);
     
-    pause(500, "Geração finalizada. Obrigado pela preferência !")
+    //pause(500, "Geração finalizada. Obrigado pela preferência !")
 }
 
 function pause (tempoMs, txt="Não definido."){

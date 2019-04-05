@@ -3,7 +3,7 @@ const fs = require('fs');
 var sleep = require('system-sleep');
 
 let arquivoResetado = false;
-
+let jafoi = false;
 
 var utilWriteScriptPro = {
 
@@ -13,8 +13,10 @@ var utilWriteScriptPro = {
 
     escreverArquivo: function(txtArquivo){
         //sleep(15);
+        createFolderIfDoesntExist(basePath + "scriptprotest/" + escolherPasta());
+        addFileAndFullPathToGlobal(basePath + "scriptprotest/" + escolherPasta(), filename + escolherNome());
         if(!arquivoResetado){
-            fs.open(basePath + folder + filename + escolherNome(), "w", function(err) {
+            fs.open(basePath + "scriptprotest/" + escolherPasta() + filename + escolherNome(), "w", function(err) {
                 if(err) {
                     return console.log(err);
                 }
@@ -22,7 +24,7 @@ var utilWriteScriptPro = {
             arquivoResetado = true;
         }
         //console.log(txtArquivo);
-        fs.appendFile(basePath + folder + filename + escolherNome(), txtArquivo, function(err) {
+        fs.appendFile(basePath + "scriptprotest/" + escolherPasta() + filename + escolherNome(), txtArquivo, function(err) {
             if(err) {
                 return console.log(err);
             }
@@ -56,6 +58,52 @@ function escolherNome(){
         default:
             return;
     }
+}
+
+function escolherPasta(){
+    switch(finalNameAtual){
+        case "MODEL":
+            return pathFileModel;
+        case "FILTER":
+            return pathFileFilter;
+        case "CONTROLLER":
+            return pathFileController;
+        case "SERVICE":
+            return pathFileService;
+        case "SQLREP":
+            return pathFileSqlRep;
+        case "SQLSELECT":
+            return pathFileSelect;
+        case "SQLINSERT":
+            return pathFileInsert;
+        case "SQLUPDATE":
+            return pathFileUpdate;
+        case "SQLDELET":
+            return pathFileDelet;
+        default:
+            return;
+    }
+}
+
+function createFolderIfDoesntExist(fullPath){
+    if (!fs.existsSync(fullPath)){
+        fs.mkdirSync(fullPath);
+    }
+}
+
+function addFileAndFullPathToGlobal(fullpath, fileName){
+    if(!jafoi){
+        jafoi = true;
+        var arr = fullpath.split('/');
+        var obj = [];
+        for(str in arr){
+            if(arr[str] != ""){
+                obj[arr[str]] = fileName;
+            }
+        }
+        console.log(obj);
+    }
+
 }
 
 module.exports = utilWriteScriptPro;

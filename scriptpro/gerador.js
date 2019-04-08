@@ -125,6 +125,10 @@ pathFileDelet = "SqlFiles/";
 // Controle de escritura de arquivo
 finalNameAtual = "";
 
+// Folders globais para mostrar no final pro usuario
+newFilesFolders = [];
+
+
 //? AREA DE PREENCHIMENTO MANUAL (por enquanto)
 const tableName = 'Usuario';
 folder = "scriptprotest/models/";
@@ -214,12 +218,62 @@ function inicio(tableName, results){
     //pause(1000, "Atualizando ~> " + finalSqlSelectName + " / " + finalSqlInsertName + " / " + finalSqlUpdateName + " / " + finalSqlDeletName);
     sqlTemplate.useTemplate(tableName, results, queries);
     
-    //pause(500, "Geração finalizada. Obrigado pela preferência !")
+    testeGeracaoNewFoldersFiles();
+
+    pause(500, "Geração finalizada. Obrigado pela preferência !")
 }
 
 function pause (tempoMs, txt="Não definido."){
     console.log("[ScriptPro] " + txt);
     //sleep(tempoMs);
+}
+
+function testeGeracaoNewFoldersFiles(){
+  var objFinal = {};
+  for(fullpath in newFilesFolders){
+    let numeroSlash = (newFilesFolders[fullpath].match(/\//g) || []).length;
+    let posicaoSlashAnterior = 0;
+    let caminho = newFilesFolders[fullpath];
+    for(var i=0; i<numeroSlash; i++){
+
+      let slashAtual = caminho.indexOf("/");
+      let printar = caminho.substr(0, slashAtual);
+      //console.log(gerarArvore(i) + printar);
+      if(objFinal[gerarArvore(i) + "└" + printar] == undefined){
+        objFinal[gerarArvore(i) + "└" + printar] = [];
+      }
+
+      caminho = caminho.substr(slashAtual+1, caminho.length);
+
+      if(i+1 == numeroSlash){
+        objFinal[gerarArvore(i) + "└" + printar].push(gerarArvore(i+1) + "└" + caminho);
+      }
+
+    }
+    
+  }
+
+  for (var property in objFinal) {
+    if(property != null){
+      console.log("" + property);
+      let espacosContados = (property.split(" ").length - 1);
+      //console.log(gerarArvore((espacosContados+2)/4) + "│");
+      if(objFinal[property] != []){
+        for(let i=0; i<objFinal[property].length; i++){
+          console.log("->" + objFinal[property][i]);  
+        }
+      }
+    }
+  }
+}
+
+function gerarArvore(i){
+  let charPrintar = "->";
+  var retorno = "";
+  for(let i2=0; i2<i; i2++){
+    retorno += "    ";
+  }
+  return retorno;
 }
 
 /**

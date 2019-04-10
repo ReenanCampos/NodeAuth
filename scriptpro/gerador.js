@@ -88,6 +88,7 @@ const sqlRepTemplate = require('./templates/sqlRep');
 const sqlTemplate = require('./templates/sql');
 
 var sleep = require('system-sleep');
+var foldersPath = require('./templates/foldersPath');
 
 // Para o sistema de encontrar e definir nome dos arquivos
 finalModelName = "Model";
@@ -198,27 +199,27 @@ connection.end();
 
 function inicio(tableName, results){
     pause(2000, "Lendo dados ...")
-    //pause(2000, "Iniciando gerador")
+    pause(2000, "Iniciando gerador")
 
-    //pause(1000, "Atualizando ~> " + tableName + finalModelName);
+    pause(1000, "Atualizando ~> " + tableName + finalModelName);
     modelTemplate.useTemplate(tableName, results);
 
-    //pause(1000, "Atualizando ~> " + tableName + finalFilterName);
+    pause(1000, "Atualizando ~> " + tableName + finalFilterName);
     filterTemplate.useTemplate(tableName, results);
 
-    //pause(1000, "Atualizando ~> " + tableName + finalControllerName);
+    pause(1000, "Atualizando ~> " + tableName + finalControllerName);
     controllerTemplate.useTemplate(tableName, queries);
 
-    //pause(1000, "Atualizando ~> " + tableName + finalServiceName);
+    pause(1000, "Atualizando ~> " + tableName + finalServiceName);
     serviceTemplate.useTemplate(tableName, results, queries);
     
-    //pause(1000, "Atualizando ~> " + tableName + finalSqlRepName);
+    pause(1000, "Atualizando ~> " + tableName + finalSqlRepName);
     sqlRepTemplate.useTemplate(tableName, results, queries);
     
-    //pause(1000, "Atualizando ~> " + finalSqlSelectName + " / " + finalSqlInsertName + " / " + finalSqlUpdateName + " / " + finalSqlDeletName);
+    pause(1000, "Atualizando ~> " + finalSqlSelectName + " / " + finalSqlInsertName + " / " + finalSqlUpdateName + " / " + finalSqlDeletName);
     sqlTemplate.useTemplate(tableName, results, queries);
     
-    testeGeracaoNewFoldersFiles();
+    foldersPath.generatePath();
 
     pause(500, "Geração finalizada. Obrigado pela preferência !")
 }
@@ -228,53 +229,49 @@ function pause (tempoMs, txt="Não definido."){
     //sleep(tempoMs);
 }
 
-function testeGeracaoNewFoldersFiles(){
-  var objFinal = {};
-  for(fullpath in newFilesFolders){
-    let numeroSlash = (newFilesFolders[fullpath].match(/\//g) || []).length;
-    let posicaoSlashAnterior = 0;
-    let caminho = newFilesFolders[fullpath];
-    for(var i=0; i<numeroSlash; i++){
 
-      let slashAtual = caminho.indexOf("/");
-      let printar = caminho.substr(0, slashAtual);
-      //console.log(gerarArvore(i) + printar);
-      if(objFinal[gerarArvore(i) + "└" + printar] == undefined){
-        objFinal[gerarArvore(i) + "└" + printar] = [];
-      }
 
-      caminho = caminho.substr(slashAtual+1, caminho.length);
-
-      if(i+1 == numeroSlash){
-        objFinal[gerarArvore(i) + "└" + printar].push(gerarArvore(i+1) + "└" + caminho);
-      }
-
-    }
-    
-  }
-
-  for (var property in objFinal) {
-    if(property != null){
-      console.log("" + property);
-      let espacosContados = (property.split(" ").length - 1);
-      //console.log(gerarArvore((espacosContados+2)/4) + "│");
-      if(objFinal[property] != []){
-        for(let i=0; i<objFinal[property].length; i++){
-          console.log("->" + objFinal[property][i]);  
-        }
-      }
-    }
-  }
-}
-
-function gerarArvore(i){
-  let charPrintar = "->";
-  var retorno = "";
-  for(let i2=0; i2<i; i2++){
-    retorno += "    ";
-  }
-  return retorno;
-}
+/* npm CHALK uses:
+  bold 
+  dim 
+  italic 
+  underline 
+  inverse 
+  strikethrough
+  black
+  red
+  green
+  yellow
+  blue
+  magenta
+  cyan
+  white
+  gray
+  redBright
+  greenBright
+  yellowBright
+  blueBright
+  magentaBright
+  cyanBright
+  whiteBright
+  bgBlack
+  bgRed
+  bgGreen
+  bgYellow
+  bgBlue
+  bgMagenta
+  bgCyan
+  bgWhite
+  bgBlackBright
+  bgRedBright
+  bgGreenBright
+  bgYellowBright
+  bgBlueBright
+  bgMagentaBright
+  bgCyanBright
+  bgWhiteBright
+  %  
+*/
 
 /**
  * List prompt example

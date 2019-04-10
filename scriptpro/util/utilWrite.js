@@ -14,7 +14,7 @@ var utilWriteScriptPro = {
     escreverArquivo: function(txtArquivo){
         //sleep(15);
         createFolderIfDoesntExist(basePath + "scriptprotest/" + escolherPasta());
-        addFileAndFullPathToGlobal(basePath + "scriptprotest/" + escolherPasta() + filename + escolherNome());
+        addFileAndFullPathToGlobal(escolherPasta() + filename + escolherNome());
         if(!arquivoResetado){
             fs.open(basePath + "scriptprotest/" + escolherPasta() + filename + escolherNome(), "w", function(err) {
                 if(err) {
@@ -92,7 +92,12 @@ function createFolderIfDoesntExist(fullPath){
 }
 
 function addFileAndFullPathToGlobal(fullpath){
-    fullpath = fullpath.substr(1, fullpath.length);
+    //fullpath = fullpath.substr(1, fullpath.length);
+
+    //regra pessoal para não ficar arvore grande
+    //fullpath = fullpath.substr(fullpath.indexOf("scriptprotest"), fullpath.length);
+    //regra pessoal para não ficar arvore grande
+
     newFilesFolders.push(fullpath);
 }
 

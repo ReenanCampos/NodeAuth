@@ -1,15 +1,92 @@
 
-
+var chalk = require("chalk");
 
 var foldersPath = {
 
-    generatePath: function (tableName, results, queries) {
+    generatePath: function(){
+        var objFinal = {};
+        for(fullpath in newFilesFolders){
+            let numeroSlash = (newFilesFolders[fullpath].match(/\//g) || []).length;
+            let posicaoSlashAnterior = 0;
+            let caminho = newFilesFolders[fullpath];
+            for(var i=0; i<numeroSlash; i++){
+                let slashAtual = caminho.indexOf("/");
+                let printar = caminho.substr(0, slashAtual);
+                //console.log(gerarArvore(i) + printar);
+                if(objFinal[printar] == undefined){
+                    objFinal[printar] = [];
+                }
 
+                caminho = caminho.substr(slashAtual+1, caminho.length);
+        
+                if(i+1 == numeroSlash){
+                    objFinal[printar].push(caminho);
+                }
+            }
+        }
+
+        printarArvore(objFinal);
     }
 
 }
 
+function gerarArvore(i){
+    let charPrintar = "->";
+    var retorno = "";
+    for(let i2=0; i2<i; i2++){
+      retorno += "  ";
+    }
+    return retorno;
+}
 
+function printarArvore(objArvore){
+    if(objArvore == undefined) return;
+    if(objArvore == null) return;
+    var cont=0;
+    var charLateralEsquerdaPasta= "├";
+    var charLateralEsquerdaArquivo= "│";
+    console.log("\n\nPastas e Arquivos gerados:\n");
+    console.log(chalk.blueBright("/home/renancampos/ReactPratica/nodeauth/scriptpro/scriptprotest"));
+    for (var property in objArvore) {
+        if(property != null){
+            
+            if(cont+1 == Object.size(objArvore)){
+                charLateralEsquerdaArquivo = " ";
+                charLateralEsquerdaPasta = "└";
+            }
+
+            if(objArvore[property].length != 0){
+                console.log(chalk.blueBright("  "+charLateralEsquerdaPasta+"─┬ ") + chalk.yellowBright(property));
+            }else{
+                console.log(chalk.blueBright("  "+charLateralEsquerdaPasta+"── ") + chalk.yellowBright(property));
+            }
+
+            if(objArvore[property] != []){
+                for(let i=0; i<objArvore[property].length; i++){
+                    if(objArvore[property].length == 1){
+                        console.log(chalk.blueBright("  "+charLateralEsquerdaArquivo+" └── ") + chalk.greenBright(objArvore[property][i]));
+                        break;
+                    }
+                    if(i+1 != objArvore[property].length){
+                        console.log(chalk.blueBright("  "+charLateralEsquerdaArquivo+" ├── ") + chalk.greenBright(objArvore[property][i]));
+                    }else{
+                        console.log(chalk.blueBright("  "+charLateralEsquerdaArquivo+" └── ") + chalk.greenBright(objArvore[property][i]));
+                    }
+                }
+            }
+            //console.log(gerarArvore((espacosContados)/2) + "│");
+        }
+        cont++;
+    }
+}
+
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
 
 module.exports = foldersPath;
 

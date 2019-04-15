@@ -1,6 +1,7 @@
 
 const fs = require('fs');
 var sleep = require('system-sleep');
+var shell = require('shelljs');
 
 let arquivoResetado = false;
 let jafoi = false;
@@ -13,10 +14,12 @@ var utilWriteScriptPro = {
 
     escreverArquivo: function(txtArquivo){
         //sleep(15);
-        createFolderIfDoesntExist(basePath + "scriptprotest/" + escolherPasta());
-        addFileAndFullPathToGlobal(escolherPasta() + filename + escolherNome());
+        createFolderIfDoesntExist(basePath + "scriptprotest/" + escolherPasta() + pathPastaPai);
+
+        addFileAndFullPathToGlobal(escolherPasta() + pathPastaPai + filename + escolherNome());
+
         if(!arquivoResetado){
-            fs.open(basePath + "scriptprotest/" + escolherPasta() + filename + escolherNome(), "w", function(err) {
+            fs.open(basePath + "scriptprotest/" + escolherPasta() + pathPastaPai + filename + escolherNome(), "w", function(err) {
                 if(err) {
                     return console.log(err);
                 }
@@ -24,7 +27,7 @@ var utilWriteScriptPro = {
             arquivoResetado = true;
         }
         //console.log(txtArquivo);
-        fs.appendFile(basePath + "scriptprotest/" + escolherPasta() + filename + escolherNome(), txtArquivo, function(err) {
+        fs.appendFile(basePath + "scriptprotest/" + escolherPasta() + pathPastaPai + filename + escolherNome(), txtArquivo, function(err) {
             if(err) {
                 return console.log(err);
             }
@@ -86,9 +89,8 @@ function escolherPasta(){
 }
 
 function createFolderIfDoesntExist(fullPath){
-    if (!fs.existsSync(fullPath)){
-        fs.mkdirSync(fullPath);
-    }
+    console.log("teste -> " + fullPath);
+    shell.mkdir('-p', fullPath);
 }
 
 function addFileAndFullPathToGlobal(fullpath){

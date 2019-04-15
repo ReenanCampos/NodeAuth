@@ -123,6 +123,8 @@ pathFileInsert = "SqlFiles/";
 pathFileUpdate = "SqlFiles/";
 pathFileDelet = "SqlFiles/";
 
+pathPastaPai = "";
+
 // Controle de escritura de arquivo
 finalNameAtual = "";
 
@@ -133,7 +135,7 @@ newFilesFolders = [];
 //? AREA DE PREENCHIMENTO MANUAL (por enquanto)
 const tableName = 'Usuario';
 folder = "scriptprotest/models/";
-
+pathPastaPai = tableName + "/";
 filename = tableName;
 arquivoOuTerminal = "ARQ"; // ARQ -> salvar em arquivo || TER -> enviar no terminal
 

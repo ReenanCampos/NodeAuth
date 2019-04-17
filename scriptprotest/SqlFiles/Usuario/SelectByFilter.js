@@ -1,5 +1,5 @@
 
-const util = require('../../util/util');
+const util = require('../../../util/util');
 const moment = require('moment');
 
 module.exports = {

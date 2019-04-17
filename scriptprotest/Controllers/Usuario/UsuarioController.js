@@ -1,18 +1,10 @@
 
-const Usuario = require('../models/UsuarioModel');
-const UsuarioService = require('../services/UsuarioService');
-const util = require('../util/util');
+const Usuario = require('../../Models/Usuario/UsuarioModel');
+const UsuarioService = require('../../Services/Usuario/UsuarioService');
+const util = require('../../../util/util');
+const UsuarioFilter = require('../../Filters/Usuario/UsuarioFilter');
 
 var UsuarioController = {
-
-    selectByFilter: function(req, res, next){
-        var filter = new UsuarioFilter(req.body)
-        if(filter.validacao.existe){
-            UsuarioService.selectByFilter(req, res, filter);
-        }else{
-            newError(res, entity.validacao.msgErro, 400);
-        }
-    },
 
     selectByFilter: function(req, res, next){
         var filter = new UsuarioFilter(req.body, true)
@@ -29,7 +21,7 @@ var UsuarioController = {
     insert: function(req, res, next){
         var entity = new Usuario(req.body, true)
         entity.validarEntidadeInsert();
-        if(filter.validacao.valido){
+        if(entity.validacao.valido){
             UsuarioService.insert(req, res, entity);
         }else{
             newError(res, entity.validacao.msgErro, 400);
@@ -39,7 +31,7 @@ var UsuarioController = {
     update: function(req, res, next){
         var entity = new Usuario(req.body, true)
         entity.validarEntidadeUpdate();
-        if(filter.validacao.valido){
+        if(entity.validacao.valido){
             UsuarioService.update(req, res, entity);
         }else{
             newError(res, entity.validacao.msgErro, 400);
@@ -49,12 +41,13 @@ var UsuarioController = {
     delet: function(req, res, next){
         var entity = new Usuario(req.body, true)
         entity.validarEntidadeDelet();
-        if(filter.validacao.valido){
+        if(entity.validacao.valido){
             UsuarioService.delet(req, res, entity);
         }else{
             newError(res, entity.validacao.msgErro, 400);
         }
     },
+
 
 }
 

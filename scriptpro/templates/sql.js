@@ -43,7 +43,7 @@ function sqlSelectFilter(tableName, results, filter){
     finalNameAtual = "SQLSELECT";
     util.resetarArquivo();
 
-    util.print(0, "const util = require('../../util/util');");
+    util.print(0, "const util = require('../../../util/util');");
     util.print(0, "const moment = require('moment');");
     util.print(0, "");
     util.print(0, "module.exports = {");

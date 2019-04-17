@@ -1,7 +1,8 @@
 
 module.exports = {
 Insert: `
-    INSERT INTO Usuario (
+    INSERT INTO usuario (
+         id
         ,nome
         ,usuario
         ,email
@@ -11,6 +12,7 @@ Insert: `
         ,ativo
         ,bloqueado
     ) VALUES (
+         ?
         ,?
         ,?
         ,?

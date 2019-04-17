@@ -9,10 +9,10 @@ var serviceScriptPro = {
         util.resetarArquivo();
         util.print(0, "const moment = require('moment');");
         util.print(0, "moment.locale('pt-BR');");
-        util.print(0, "let db = require('../dbConnection');");
-        util.print(0, "const util = require('../util/util');");
-        util.print(0, "const " + tableName + " = require('../models/" + tableName + finalModelName + "');");
-        util.print(0, "const " + tableName + finalSqlRepName + " = require('../sqlrep/" + util.capitalize(tableName) + "/" + tableName + finalServiceName + "');");
+        util.print(0, "let db = require('../../../dbConnection');");
+        util.print(0, "const util = require('../../../util/util');");
+        util.print(0, "const " + tableName + " = require('../../" + pathFileModel + pathPastaPai + tableName + finalModelName + "');");
+        util.print(0, "const " + tableName + finalSqlRepName + " = require('../../" + pathFileSqlRep + pathPastaPai + tableName + finalServiceName + "');");
         util.print(0, "");
 
         util.print(0, "var " + tableName + finalServiceName + " = {");

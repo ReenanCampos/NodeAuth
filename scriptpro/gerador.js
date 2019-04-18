@@ -134,7 +134,7 @@ newFilesFolders = [];
 
 //? AREA DE PREENCHIMENTO MANUAL (por enquanto)
 const tableName = 'Usuario';
-folder = "scriptprotest/models/";
+folder = "_project/models/";
 pathPastaPai = tableName + "/";
 filename = tableName;
 arquivoOuTerminal = "ARQ"; // ARQ -> salvar em arquivo || TER -> enviar no terminal

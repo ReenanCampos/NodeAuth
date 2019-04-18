@@ -12,7 +12,7 @@ var serviceScriptPro = {
         util.print(0, "let db = require('../../../dbConnection');");
         util.print(0, "const util = require('../../../util/util');");
         util.print(0, "const " + tableName + " = require('../../" + pathFileModel + pathPastaPai + tableName + finalModelName + "');");
-        util.print(0, "const " + tableName + finalSqlRepName + " = require('../../" + pathFileSqlRep + pathPastaPai + tableName + finalServiceName + "');");
+        util.print(0, "const " + tableName + finalSqlRepName + " = require('../../" + pathFileSqlRep + pathPastaPai + tableName + finalSqlRepName + "');");
         util.print(0, "");
 
         util.print(0, "var " + tableName + finalServiceName + " = {");

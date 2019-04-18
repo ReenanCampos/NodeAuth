@@ -46,7 +46,7 @@ function printarArvore(objArvore){
     var charLateralEsquerdaPasta= "├";
     var charLateralEsquerdaArquivo= "│";
     console.log("\n\nPastas e Arquivos gerados:\n");
-    console.log(chalk.blueBright("/home/renancampos/ReactPratica/nodeauth/scriptpro/scriptprotest"));
+    console.log(chalk.blueBright("/home/renancampos/ReactPratica/nodeauth/_project"));
     for (var property in objArvore) {
         if(property != null){
             

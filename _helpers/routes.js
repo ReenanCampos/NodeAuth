@@ -6,7 +6,7 @@ const RoleAuth = require('_helpers/role');
 
 
 //* Controllers
-const UsuarioController = require('../scriptprotest/Controllers/Usuario/UsuarioController');
+const UsuarioController = require('../_project/Controllers/Usuario/UsuarioController');
 const AuthController = require('../controllers/usuario.controller');
 //const RoleController = require('../controllers/role.controller');
 
@@ -19,7 +19,7 @@ const AUTH_PREFIX = "/auth";
 
 //? User
 router.post(AUTH_PREFIX + '/login', AuthController.authenticate);  
-router.post(USER_PREFIX + '/selectAll', UsuarioController.selectAll);  
+//router.post(USER_PREFIX + '/selectAll', UsuarioController.selectAll);  
 router.post(USER_PREFIX + '/selectByFilter', UsuarioController.selectByFilter);  
 router.post(USER_PREFIX + '/insert', UsuarioController.insert);  
 router.post(USER_PREFIX + '/update', UsuarioController.update);  

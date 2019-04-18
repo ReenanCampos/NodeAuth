@@ -71,7 +71,7 @@ function usarDefault(tableName) {
     util.print(2, "if(filter.validacao.existe){");
     util.print(3, tableName + finalServiceName + ".selectByFilter(req, res, filter);");
     util.print(2, "}else{");
-    util.print(3, "newError(res, entity.validacao.msgErro, 400);");
+    util.print(3, "util.newError(res, filter.validacao.msgErro, 400);");
     util.print(2, "}");
     util.print(1, "},");
     util.print(0, "");
@@ -82,7 +82,7 @@ function usarDefault(tableName) {
     util.print(2, "if(entity.validacao.valido){");
     util.print(3, tableName + finalServiceName + ".insert(req, res, entity);");
     util.print(2, "}else{");
-    util.print(3, "newError(res, entity.validacao.msgErro, 400);");
+    util.print(3, "util.newError(res, entity.validacao.msgErro, 400);");
     util.print(2, "}");
     util.print(1, "},");
     util.print(0, "");
@@ -93,7 +93,7 @@ function usarDefault(tableName) {
     util.print(2, "if(entity.validacao.valido){");
     util.print(3, tableName + finalServiceName + ".update(req, res, entity);");
     util.print(2, "}else{");
-    util.print(3, "newError(res, entity.validacao.msgErro, 400);");
+    util.print(3, "util.newError(res, entity.validacao.msgErro, 400);");
     util.print(2, "}");
     util.print(1, "},");
     util.print(0, "");
@@ -104,7 +104,7 @@ function usarDefault(tableName) {
     util.print(2, "if(entity.validacao.valido){");
     util.print(3, tableName + finalServiceName + ".delet(req, res, entity);");
     util.print(2, "}else{");
-    util.print(3, "newError(res, entity.validacao.msgErro, 400);");
+    util.print(3, "util.newError(res, entity.validacao.msgErro, 400);");
     util.print(2, "}");
     util.print(1, "},");
     util.print(0, "");

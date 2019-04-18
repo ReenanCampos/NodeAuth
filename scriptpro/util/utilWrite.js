@@ -14,12 +14,12 @@ var utilWriteScriptPro = {
 
     escreverArquivo: function(txtArquivo){
         //sleep(15);
-        createFolderIfDoesntExist(basePath + "scriptprotest/" + escolherPasta() + pathPastaPai);
+        createFolderIfDoesntExist(basePath + "_project/" + escolherPasta() + pathPastaPai);
 
         addFileAndFullPathToGlobal(escolherPasta() + pathPastaPai + filename + escolherNome());
 
         if(!arquivoResetado){
-            fs.open(basePath + "scriptprotest/" + escolherPasta() + pathPastaPai + filename + escolherNome(), "w", function(err) {
+            fs.open(basePath + "_project/" + escolherPasta() + pathPastaPai + filename + escolherNome(), "w", function(err) {
                 if(err) {
                     return console.log(err);
                 }
@@ -27,7 +27,7 @@ var utilWriteScriptPro = {
             arquivoResetado = true;
         }
         //console.log(txtArquivo);
-        fs.appendFile(basePath + "scriptprotest/" + escolherPasta() + pathPastaPai + filename + escolherNome(), txtArquivo, function(err) {
+        fs.appendFile(basePath + "_project/" + escolherPasta() + pathPastaPai + filename + escolherNome(), txtArquivo, function(err) {
             if(err) {
                 return console.log(err);
             }
@@ -97,7 +97,7 @@ function addFileAndFullPathToGlobal(fullpath){
     //fullpath = fullpath.substr(1, fullpath.length);
 
     //regra pessoal para não ficar arvore grande
-    //fullpath = fullpath.substr(fullpath.indexOf("scriptprotest"), fullpath.length);
+    //fullpath = fullpath.substr(fullpath.indexOf("_project"), fullpath.length);
     //regra pessoal para não ficar arvore grande
 
     newFilesFolders.push(fullpath);

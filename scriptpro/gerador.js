@@ -133,7 +133,7 @@ newFilesFolders = [];
 
 
 //? AREA DE PREENCHIMENTO MANUAL (por enquanto)
-const tableName = 'Usuario';
+const tableName = 'UsuarioLoginHistorico';
 folder = "_project/models/";
 pathPastaPai = tableName + "/";
 filename = tableName;

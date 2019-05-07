@@ -6,7 +6,7 @@ const UsuarioRole = require("../models/UsuarioRole");
 const usuarioService = require('../services/usuario.service');
 const util = require('../util/util');
 
-var UsuarioController = {
+var zController = {
     all: function(req, res){
         res.send('All todos')
     },

@@ -7,13 +7,13 @@ const RoleAuth = require('_helpers/role');
 
 //* Controllers
 const UsuarioController = require('../_project/Controllers/Usuario/UsuarioController');
-const AuthController = require('../controllers/usuario.controller');
+const AuthController = require('../_project/Controllers/Autenticacao/AutenticacaoController');
 //const RoleController = require('../controllers/role.controller');
 
 //* Prefixos de Controllers
 const ROLE_PREFIX = "/role";
-const USER_PREFIX = "/usuario";
 const AUTH_PREFIX = "/auth";
+const USER_PREFIX = "/usuario";
 
 
 
